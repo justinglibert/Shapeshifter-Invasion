@@ -8,22 +8,20 @@
 
 import React from 'react';
 import { Client } from 'boardgame.io/react';
-import ChessGame from '../game';
-import ChessBoard from './board';
+import SpaceGame from '../game';
+import SpaceBoard from './board';
 import { Button, Intent, Spinner } from "@blueprintjs/core";
 const MySpinner = <Spinner intent={Intent.PRIMARY} />;
 const App = Client({
-  game: ChessGame,
-  board: ChessBoard,
+  game: SpaceGame,
+  board: SpaceBoard,
   multiplayer: true,
-  debug: false,
+  debug: true,
 });
 
 const Multiplayer = () => (
   <div style={{ padding: 50 }}>
-    <App gameID="multi" playerID="0" />
-    <App gameID="multi" playerID="1" />
-    {MySpinner}
+    <App playerID="0" />
   </div>
 );
 

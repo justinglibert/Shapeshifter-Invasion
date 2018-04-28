@@ -7,64 +7,50 @@
  */
 
 import { Game } from 'boardgame.io/core';
-import Chess from 'chess.js';
 
-// Helper to instantiate chess.js correctly on
-// both browser and Node.
-function Load(pgn) {
-  let chess = null;
-  if (Chess.Chess) {
-    chess = new Chess.Chess();
-  } else {
-    chess = new Chess();
-  }
-  chess.load_pgn(pgn);
-  return chess;
-}
 
-const ChessGame = Game({
-  name: 'chess',
+const SpaceGame = Game({
+  name: 'space',
 
-  setup: () => ({ pgn: '' }),
+  setup: () => ({
+    proposals: []
+  }),
 
   moves: {
-    move(G, ctx, san) {
-      const chess = Load(G.pgn);
-      if (
-        (chess.turn() == 'w' && ctx.currentPlayer == '1') ||
-        (chess.turn() == 'b' && ctx.currentPlayer == '0')
-      ) {
-        return { ...G };
+    propose(G, ctx, proposal) {
+      let newG = {
+        ...G
       }
-      chess.move(san);
-      return { pgn: chess.pgn() };
+      newG.proposals.push({
+        proposal,
+        player: ctx.currentPlayer
+      })
+      return newG
     },
   },
 
   flow: {
-    movesPerTurn: 1,
-
-    endGameIf: G => {
-      const chess = Load(G.pgn);
-      if (chess.game_over()) {
-        if (
-          chess.in_draw() ||
-          chess.in_threefold_repetition() ||
-          chess.insufficient_material() ||
-          chess.in_stalemate()
-        ) {
-          return 'd';
-        }
-        if (chess.in_checkmate()) {
-          if (chess.turn() == 'w') {
-            return 'b';
-          } else {
-            return 'w';
-          }
+    phases: [
+      {
+        name: 'propose',
+        allowedMoves: ['propose'],
+        endPhaseIf: (G, ctx) => {
+          console.log(ctx.currentPlayer)
+          console.log(JSON.stringify(G))
+          console.log(
+            G.proposals.filter((p)=>{
+              p.player == ctx.currentPlayer
+            }).length
+          )
+          return G.proposals.filter((p)=>{
+            p.player == ctx.currentPlayer
+          }).length != 0
         }
       }
+    ],
+    endGameIf: G => {
     },
   },
 });
 
-export default ChessGame;
+export default SpaceGame;

@@ -21,19 +21,12 @@ class Board extends React.Component {
 
   constructor(props) {
     super(props);
-    this.chess = new Chess();
   }
 
   state = {
     selected: '',
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.G.pgn) {
-      this.chess.load_pgn(nextProps.G.pgn);
-      this.setState({ selected: '' });
-    }
-  }
 
   render() {
     let disconnected = null;
@@ -42,8 +35,6 @@ class Board extends React.Component {
     }
     return (
       <div>
-
-        {this._getStatus()}
         {disconnected}
       </div>
     );
