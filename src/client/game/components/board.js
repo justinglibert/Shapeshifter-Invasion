@@ -20,7 +20,8 @@ import Problems from './ui/problems';
 import Proposition from './ui/proposition';
 import Propositions from './ui/propositions';
 import Choice from './ui/choice';
-import ChooseItems from './ui/chooseItems'
+import ChooseItems from './ui/chooseItems';
+import AlienInfo from './ui/alienInfo';
 
 class Board extends React.Component {
     static propTypes = {
@@ -110,6 +111,7 @@ class Board extends React.Component {
                     >
                         <Items items={this.props.G.items} />
                         <Problems problems={this.props.G.problems} />
+                        <AlienInfo rooms={rooms}/>
                     </div>
                 </div>
             </div>
