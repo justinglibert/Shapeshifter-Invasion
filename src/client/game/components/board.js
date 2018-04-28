@@ -29,14 +29,16 @@ class Board extends React.Component {
 
 
   render() {
-    let disconnected = null;
+    let disconnected = <p>Connected!</p>;
     if (this.props.isMultiplayer && !this.props.isConnected) {
       disconnected = <p>Disconnected!</p>;
     }
     return (
       <div>
         {disconnected}
-        {this.props.playerID}
+        <p>
+          Current player: {this.props.playerID}
+        </p>
       </div>
     );
   }
