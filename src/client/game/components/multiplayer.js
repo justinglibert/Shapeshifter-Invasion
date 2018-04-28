@@ -22,9 +22,7 @@ const App = Client({
 });
 
 const Multiplayer = ({match}) => (
-  <div style={{ padding: 50 }}>
     <App playerID={match.params.id} />
-  </div>
 );
 
 export default Multiplayer;

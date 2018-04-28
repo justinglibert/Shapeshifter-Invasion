@@ -9,9 +9,11 @@ class Propositions extends React.Component {
                 <Card>
                     <p> propositions </p>
                     <div>
-                        {this.props.propositions.map( (proposition) => (
-                            <Proposition proposition = {proposition}/>
-                        ))}
+                        {this.props.propositions ? this.props.propositions.map( (proposition, i) => (
+                            <Proposition id={i} vote={(id)=>{
+                                this.props.vote(id)
+                            }}proposition = {proposition} canVote={this.props.canVote}/>
+                        )) : 'No proposition'}
                     </div>
                 </Card>
             </div>
