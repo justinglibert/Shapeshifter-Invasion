@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-//import { action } from '@storybook/addon-actions';
+import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { Button, Welcome } from '@storybook/react/demo';
@@ -10,18 +10,19 @@ import Player from '../src/client/game/components/ui/player';
 import Item from '../src/client/game/components/ui/item';
 import Items from '../src/client/game/components/ui/items';
 import Players from '../src/client/game/components/ui/players';
+import Status from '../src/client/game/components/ui/status';
+import ShipStatus from '../src/client/game/components/ui/shipStatus';
 import Problem from '../src/client/game/components/ui/problem';
 import Problems from '../src/client/game/components/ui/problems';
 import Proposition from '../src/client/game/components/ui/proposition';
 import Propositions from '../src/client/game/components/ui/propositions';
 import Choice from '../src/client/game/components/ui/choice';
 
-
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
-// storiesOf('Button', module)
-//   .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-//   .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
+storiesOf('Button', module)
+  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
+  .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
 
 
 storiesOf('Card', module).add('with random children', ()=>
@@ -31,6 +32,7 @@ storiesOf('Card', module).add('with random children', ()=>
 storiesOf('Card', module).add('with no text', ()=>
   <Card><p/></Card>
 )
+
 
 const player1 = {
   id: 0,
@@ -64,6 +66,30 @@ storiesOf('Item', module).add('with pistol', ()=>
     name: 'pistol',
     image: '../src/client/game/resources/m9-pistol.jpg'
   }}/>
+)
+
+const oxygen = {
+  name: 'oxygen',
+  amount: '5'
+}
+
+const water = {
+name: 'water',
+amount: '7'
+}
+
+const ship = {
+  problems: [],
+  resources: [oxygen, water]
+};
+
+
+storiesOf('Status', module).add('of oxygen', ()=>
+  <Status resource={oxygen} decrease={1}/>
+)
+
+storiesOf('ShipStatus', module).add('of ship', ()=>
+  <ShipStatus ship={ship}/>
 )
 
 const problem1 = {
