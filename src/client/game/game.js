@@ -31,7 +31,7 @@ const getNumberOfAlivePlayers = G => {
 const findNextAlivePlayer = G => {
     return G.players.findIndex(p => {
         return p.alive;
-    })
+    });
 };
 const TurnExample = Game({
     name: 'turnorder',
@@ -139,7 +139,7 @@ const TurnExample = Game({
     },
     flow: {
         turnOrder: {
-            first: () => 0, 
+            first: (G) => findNextAlivePlayer(G),
             next: (G, ctx) => {
                 let index = ctx.playOrderPos + 1;
                 let alive = G.players[index % ctx.numPlayers].alive;
@@ -147,21 +147,31 @@ const TurnExample = Game({
                     index++;
                     alive = G.players[index % ctx.numPlayers].alive;
                 }
-                console.log(alive, index % ctx.numPlayers, G.players[index % ctx.numPlayers].name)
+                console.log(
+                    alive,
+                    index % ctx.numPlayers,
+                    G.players[index % ctx.numPlayers].name
+                );
                 return index % ctx.numPlayers;
-            } 
+            }
         },
-        onTurnBegin: (G, ctx) =>{
-                if(G.players[ctx.currentPlayer].alive === false){
-                    ctx.event.endTurn()
-                }
-                return G
-            },
+        onTurnBegin: (G, ctx) => {
+            if (G.players[ctx.currentPlayer].alive === false) {
+                console.log('Turn Blocked by the hook');
+                ctx.event.endTurn();
+            }
+            return G;
+        },
         phases: [
             {
                 name: 'propose',
                 allowedMoves: ['propose', 'endTurn', 'endPhase'],
                 endTurnIf: (G, ctx) => {
+                    G.proposals.filter(p => {
+                        return p.player == ctx.currentPlayer;
+                    }).length != 0
+                        ? console.log('Ending Turn Propose')
+                        : undefined;
                     return (
                         G.proposals.filter(p => {
                             return p.player == ctx.currentPlayer;
@@ -169,6 +179,9 @@ const TurnExample = Game({
                     );
                 },
                 endPhaseIf: (G, ctx) => {
+                    G.proposals.length === getNumberOfAlivePlayers(G)
+                        ? console.log('Ending Phase Propose')
+                        : undefined;
                     return G.proposals.length === getNumberOfAlivePlayers(G);
                 }
             },
@@ -183,6 +196,7 @@ const TurnExample = Game({
                                 .length !== 0
                         );
                     });
+                    t.length != 0 ? console.log('Ending Turn Vote') : undefined;
                     return t.length != 0;
                 },
                 endPhaseIf: (G, ctx) => {
@@ -190,9 +204,8 @@ const TurnExample = Game({
                     G.proposals.forEach(p => {
                         numberOfPlayersWhoVoted += p.voters.length;
                     });
-                    if (
-                        numberOfPlayersWhoVoted >= getNumberOfAlivePlayers(G)
-                    ) {
+                    if (numberOfPlayersWhoVoted >= getNumberOfAlivePlayers(G)) {
+                        console.log('Ending Phase Vote');
                         return true;
                     }
                     return false;
@@ -202,7 +215,6 @@ const TurnExample = Game({
                 name: 'resolve',
                 allowedMoves: ['endTurn', 'endPhase', 'pickUpItems'],
                 onPhaseBegin: (G, ctx) => {
-                    console.log(0);
                     let mostVotedProposal = G.proposals.sort((a, b) => {
                         return a.voters.length < b.voters.length;
                     })[0];
@@ -219,7 +231,7 @@ const TurnExample = Game({
                             if (G.rooms[room].deadly) {
                                 newG.players[player].alive = false;
                                 ctx.events.endPhase('propose');
-                                ctx.events.endTurn(findNextAlivePlayer(newG))
+                                ctx.events.endTurn(findNextAlivePlayer(newG));
                                 return newG;
                             } else {
                                 console.log('Visiting a Room');
@@ -229,11 +241,11 @@ const TurnExample = Game({
                                 };
                                 return newG;
                             }
-                        case 'THROW':
+                        case 'THROW': 
                             let deadPlayer = mostVotedProposal.proposal.player;
                             newG.players[deadPlayer].alive = false;
                             ctx.events.endPhase('propose');
-                            ctx.events.endTurn(findNextAlivePlayer(newG))
+                            ctx.events.endTurn(findNextAlivePlayer(newG));
                             return newG;
                         case 'FIX':
                             let { problemId } = mostVotedProposal.proposal;
@@ -255,12 +267,12 @@ const TurnExample = Game({
                                 newG.problems[problemId].active = false;
                             }
                             ctx.events.endPhase('propose');
-                            ctx.events.endTurn(findNextAlivePlayer(newG))
+                            ctx.events.endTurn(findNextAlivePlayer(newG));
                             return newG;
                         default:
                             console.error('This action does not exist');
                             ctx.events.endPhase('propose');
-                            ctx.events.endTurn(findNextAlivePlayer(newG))
+                            ctx.events.endTurn(findNextAlivePlayer(newG));
                             return newG;
                     }
                 },

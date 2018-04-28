@@ -20,6 +20,7 @@ import Problems from './ui/problems';
 import Proposition from './ui/proposition';
 import Propositions from './ui/propositions';
 import Choice from './ui/choice';
+import ChooseItems from './ui/chooseItems'
 
 class Board extends React.Component {
     static propTypes = {
@@ -72,6 +73,10 @@ class Board extends React.Component {
                 {amIPlaying && this.props.ctx.phase === 'propose' ? <Choice submit={(p) => {
                   this.props.moves.propose(p)
                 }} players={players} rooms={rooms} problems={problems}/> : undefined}
+                {amIPlaying && this.props.ctx.phase === 'resolve' && this.props.G.roomBeingVisited ? <ChooseItems submit={(i) => {
+                  this.props.moves.pickUpItems(i)
+                  //console.log(i)
+                }} room={this.props.G.roomBeingVisited}/> : undefined}
                 <div
                     style={{
                         height: '90vh',
