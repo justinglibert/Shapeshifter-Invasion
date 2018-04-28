@@ -18,6 +18,8 @@ import Proposition from '../src/client/game/components/ui/proposition';
 import Propositions from '../src/client/game/components/ui/propositions';
 import Choice from '../src/client/game/components/ui/choice';
 
+import '../src/client/index.scss';
+
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
 storiesOf('Button', module)
