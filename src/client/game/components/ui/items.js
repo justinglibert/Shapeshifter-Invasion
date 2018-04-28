@@ -7,7 +7,7 @@ class Items extends React.Component {
         return (
             <div>
                 <Card>
-                    <p>items</p>
+                    <p>Items</p>
                     <div>
                     {this.props.items.map( (item) => (
                         <Item item={item}/>

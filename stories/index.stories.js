@@ -10,6 +10,8 @@ import Player from '../src/client/game/components/ui/player';
 import Item from '../src/client/game/components/ui/item';
 import Items from '../src/client/game/components/ui/items';
 import Players from '../src/client/game/components/ui/players';
+import Status from '../src/client/game/components/ui/status';
+import ShipStatus from '../src/client/game/components/ui/shipStatus';
 
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
@@ -61,4 +63,30 @@ storiesOf('Item', module).add('with pistol', ()=>
     image: '../src/client/game/resources/m9-pistol.jpg'
   }}/>
 )
+
+const oxygen = {
+  name: 'oxygen',
+  amount: '5'
+}
+
+const water = {
+name: 'water',
+amount: '7'
+}
+
+const ship = {
+  problems: [],
+  resources: [oxygen, water]
+};
+
+
+storiesOf('Status', module).add('of oxygen', ()=>
+  <Status resource={oxygen} decrease={1}/>
+)
+
+storiesOf('ShipStatus', module).add('of ship', ()=>
+  <ShipStatus ship={ship}/>
+)
+
+
 
