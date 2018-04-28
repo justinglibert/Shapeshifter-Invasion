@@ -6,17 +6,11 @@
  * https://opensource.org/licenses/MIT.
  */
 
-import Singleplayer from './components/singleplayer';
 import Multiplayer from './components/multiplayer';
 
 const routes = [
   {
-    path: '/chess/singleplayer',
-    text: 'Singleplayer',
-    component: Singleplayer,
-  },
-  {
-    path: '/chess/multiplayer',
+    path: '/game',
     text: 'Multiplayer',
     component: Multiplayer,
   },

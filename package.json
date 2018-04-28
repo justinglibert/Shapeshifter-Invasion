@@ -6,16 +6,17 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development babel-watch --presets=es2015,stage-0 src/server.js",
     "lint": "eslint .",
-    "storybook": "start-storybook -p 3000 -c storybook",
+    "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook -c storybook -o docs/storybook",
-    "prettier": "prettier --write \"{src,storybook}/**/*.{js,css,md}\""
+    "prettier": "prettier --write \"{src,storybook}/**/*.{js,css,md}\"",
+    "build-storybook": "build-storybook"
   },
   "license": "MIT",
   "devDependencies": {
-    "@storybook/addon-actions": "^3.2.16",
+    "@storybook/addon-actions": "^3.4.3",
     "@storybook/addon-knobs": "^3.3.10",
     "@storybook/addon-options": "^3.2.16",
-    "@storybook/react": "^3.2.16",
+    "@storybook/react": "^3.4.3",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.0",
@@ -60,7 +61,9 @@
     "shelljs": "^0.7.8",
     "style-loader": "^0.21.0",
     "uglify-es": "^3.1.3",
-    "webpack": "^3.5.5"
+    "webpack": "^3.5.5",
+    "@storybook/addon-links": "^3.4.3",
+    "@storybook/addons": "^3.4.3"
   },
   "dependencies": {
     "@blueprintjs/core": "^2.2.1",
