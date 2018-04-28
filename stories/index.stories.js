@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+//import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { Button, Welcome } from '@storybook/react/demo';
@@ -10,15 +10,18 @@ import Player from '../src/client/game/components/ui/player';
 import Item from '../src/client/game/components/ui/item';
 import Items from '../src/client/game/components/ui/items';
 import Players from '../src/client/game/components/ui/players';
-import Status from '../src/client/game/components/ui/status';
-import ShipStatus from '../src/client/game/components/ui/shipStatus';
+import Problem from '../src/client/game/components/ui/problem';
+import Problems from '../src/client/game/components/ui/problems';
+import Proposition from '../src/client/game/components/ui/proposition';
+import Propositions from '../src/client/game/components/ui/propositions';
+import Choice from '../src/client/game/components/ui/choice';
 
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
+// storiesOf('Button', module)
+//   .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
+//   .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
 
 
 storiesOf('Card', module).add('with random children', ()=>
@@ -28,7 +31,6 @@ storiesOf('Card', module).add('with random children', ()=>
 storiesOf('Card', module).add('with no text', ()=>
   <Card><p/></Card>
 )
-
 
 const player1 = {
   id: 0,
@@ -64,29 +66,56 @@ storiesOf('Item', module).add('with pistol', ()=>
   }}/>
 )
 
-const oxygen = {
-  name: 'oxygen',
-  amount: '5'
+const problem1 = {
+  name: 'Oxygen Leak',
+  description: 'Oxygen is leaking!',
+  solution: 'Find an oxygen tank',
+  affected: 'Oxygen',
+  decreaseRate: 10
 }
 
-const water = {
-name: 'water',
-amount: '7'
+const problem2= {
+  name: 'Power cut',
+  description: 'The engine room needs the power back.',
+  solution: 'Turn power back on.',
+  affected: 'Speed',
+  decreaseRate: 5
 }
 
-const ship = {
-  problems: [],
-  resources: [oxygen, water]
-};
+const problems = [problem1, problem2]
 
-
-storiesOf('Status', module).add('of oxygen', ()=>
-  <Status resource={oxygen} decrease={1}/>
+storiesOf('Problems', module).add('Problems', () => 
+  <Problems problems = {problems}/>
 )
 
-storiesOf('ShipStatus', module).add('of ship', ()=>
-  <ShipStatus ship={ship}/>
+const prop1 = {
+  player: 'Justin',
+  description: 'Send Jay to room 8.',
+  percentage: 25
+}
+
+const prop2 = {
+  player: 'Robin',
+  description: 'Probe room 2.',
+  percentage: 50
+}
+
+const propositions = [prop1, prop2]
+
+storiesOf('Propositions', module).add('Propositions', () => 
+  <Propositions propositions = {propositions}/>
 )
 
+// playersNames = ['Jay', 'Justin', 'Qais', 'Robin']
+// rooms = ['room1', 'room2', 'room3', 'room4']
 
+// const choice1 = {
+//   dropSendWho: playersNames,
+//   dropSendDestination: rooms,
+//   dropThrowWho: playersNames,
+//   dropFix: 'oxygen leak'
+// }
 
+// storiesOf('Choice', module).add('Choice', () =>
+//   <Choice choice = {choice1}/>
+// )
