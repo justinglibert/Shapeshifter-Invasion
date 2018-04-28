@@ -20,32 +20,65 @@ import { Game } from 'boardgame.io/core';
  //Proposals
 //  let a = {
 //      type: 'SEND',
-//      who: 0,
-//      where: 
+//      player: 0,
+//      room: 0
 //  }
+const getNumberOfAlivePlayers = (G) => {
+    return G.players.filter((p)=>{
+        return p.alive
+    }).length
+}
 const TurnExample = Game({
     name: 'turnorder',
-
     setup: () => ({
         rooms: [
             {
                 name: 'Kitchen',
-                deadly
+                deadly: true,
+                items: [
+                    {
+                        id: 'screwdriver',
+                        name: "Screwdriver"
+                    }
+                ]
+            },
+            {
+                name: 'Engine',
+                deadly: false,
+                items: [
+                    {
+                        id: 'screwdriver',
+                        name: "Screwdriver"
+                    }
+                ]
+            }
+        ],
+        roomBeingVisited: undefined,
+        problems: [
+            {
+                active: true,
+                name: 'oxygen leak',
+                description: 'oxygen leaks every turn',
+                solutions: ['screwdriver'],
+                affected: 'oxygen',
+                decreaseRate: 10
             }
         ],
         proposals: [],
+        items: [
+            {
+                id: 'screwdriver2',
+                name: "Screwdriver2"
+            }
+        ],
         players: [
             {
                 name: 'Player 1',
-                actions: 0
+                alive: true
             },
             {
                 name: 'Player 2',
-                actions: 0
-            },
-            {
-                name: 'Player 3',
-                actions: 0
+                alive: true
             }
         ]
     }),
@@ -68,9 +101,41 @@ const TurnExample = Game({
             };
             newG.proposals[proposalId].voters.push(ctx.currentPlayer);
             return newG;
+        },
+        pickUpItems(G, ctx, items) {
+            //Items is an array of id
+            console.log("ItemsPicked")
+            ctx.events.endPhase('propose')
+            let newG= {...G}
+            let newItems = newG.roomBeingVisited.items.filter((i) => {
+                console.log('ItemInRoom: ' + JSON.stringify(i))
+                console.log('SelectionOfItems: ' + items)
+                console.log('HasBeenSelected: ' + items.includes(i.id))
+                return items.includes(i.id)
+            })
+            console.log("NewItems: " + JSON.stringify(newItems))
+            newG.items = [
+                ...newG.items,
+                ...newItems
+            ]
+            console.log("FinalItems: " + JSON.stringify(newG.items))
+            newG.roomBeingVisited = undefined
+            return newG
         }
     },
     flow: {
+        turnOrder: {
+            first: () => 0,
+            next: (G, ctx) => {
+                let index = ctx.playOrderPos + 1
+                let alive = G.players[index % ctx.numPlayers].alive
+                while(!alive){
+                    index++
+                    alive = G.players[index % ctx.numPlayers].alive
+                }
+                return (index) % ctx.numPlayers
+            }
+        },
         phases: [
             {
                 name: 'propose',
@@ -83,7 +148,7 @@ const TurnExample = Game({
                     );
                 },
                 endPhaseIf: (G, ctx) => {
-                    return G.proposals.length === ctx.numPlayers;
+                    return G.proposals.length === getNumberOfAlivePlayers(G);
                 }
             },
             {
@@ -91,7 +156,7 @@ const TurnExample = Game({
                 allowedMoves: ['vote', 'endTurn', 'endPhase'],
                 endTurnIf: (G, ctx) => {
                       let t = G.proposals.filter(p => {
-                          console.log(p)
+                          //console.log(p)
                           return p.voters.filter((v)=>v === ctx.currentPlayer).length !== 0
                       })
                     return t.length != 0;
@@ -101,7 +166,7 @@ const TurnExample = Game({
                     G.proposals.forEach((p)=>{
                         numberOfPlayersWhoVoted += p.voters.length
                     })
-                    if(numberOfPlayersWhoVoted === ctx.numPlayers){
+                    if(numberOfPlayersWhoVoted === getNumberOfAlivePlayers(G)){
                       return true
                     }
                       return false
@@ -109,34 +174,81 @@ const TurnExample = Game({
             },
             {
                 name: 'resolve',
-                allowedMoves: ['endTurn', 'endPhase'],
+                allowedMoves: ['endTurn', 'endPhase', 'pickUpItems'],
                 onPhaseBegin: (G,ctx) => {
                 console.log(0)
-                  let mostVotedProposal = G.proposals.sort((p)=>{
-                      return p.voters.length
+                  let mostVotedProposal = G.proposals.sort((a,b)=>{
+                      return a.voters.length < b.voters.length
                   })[0]
-                  console.log(mostVotedProposal.proposal);
-                  if(mostVotedProposal.proposal === 0){
-                    //Put in the array the people who have to do something to resolve the action. He has too call endPhase to go back to propose
-                    ctx.events.changeActionPlayers(['1']);
-                    return G
-                  } else if (mostVotedProposal.proposal === 1){
-                    ctx.events.endPhase('propose');
-                    return G
-                  } else {
-                    return G
+                  console.log('Chosen Proposal:\n' + JSON.stringify(mostVotedProposal.proposal));
+                  let newG = {
+                      ...G
                   }
+                  switch(mostVotedProposal.proposal.type){
+                        case 'SEND':
+                            let {player, room} = mostVotedProposal.proposal
+                            if(G.rooms[room].deadly){
+                                newG.players[player].alive = false
+                                ctx.events.endPhase('propose');
+                                return newG
+                            } else {
+                                console.log("Visiting a Room")
+                                ctx.events.endTurn(player);
+                                newG.roomBeingVisited = {
+                                    ...G.rooms[room]
+                                }
+                                return newG
+                            }
+                        case 'THROW':
+                            let deadPlayer = mostVotedProposal.proposal.player
+                            newG.players[deadPlayer].alive = false
+                            ctx.events.endPhase('propose');
+                            return newG
+                        case 'FIX':
+                            let {problemId} = mostVotedProposal.proposal;
+                            let problem = newG.problems[problemId];
+                            let canFix = true
+                            problem.solutions.forEach((s) => {
+                                console.log("s: " + s)
+                                if(newG.items.filter((i) => {
+                                    //console.log("items: " + JSON.stringify(i))
+                                    return i.id === s
+                                }).length < 1){
+                                    canFix = false
+                                }
+                            })
+                            console.log("CanFix: " + canFix)
+                            if(canFix){
+                                newG.problems[problemId].active = false
+                            }
+                            ctx.events.endPhase('propose');
+                            return newG
+                        default:
+                            console.error("This action does not exist")
+                            ctx.events.endPhase('propose');
+                            return newG
+                    
+                  }
+                },
+                endPhaseIf: (G, ctx) => {
+                    return G.roomBeingVisited === undefined
                 },
                 onPhaseEnd: (G,ctx) => {
                   let newG = {
                     ...G
                   }
                   newG.proposals = []
+                  newG.roomBeingVisited = undefined
                   return newG
                 },
-                onTurnEnd: (G,ctx) => {
-                  ctx.events.endPhase('propose')
-                }
+                //Use that when multiple people will be travelling
+                // onTurnEnd: (G,ctx) => {
+                //   let newG = {
+                //         ...G
+                //   }
+                //   ctx.events.endPhase('propose')
+                //   return newG
+                // }
             }
         ]
     }
