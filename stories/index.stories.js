@@ -9,6 +9,7 @@ import Card from '../src/client/game/components/ui/card';
 import Player from '../src/client/game/components/ui/player';
 import Item from '../src/client/game/components/ui/item';
 import Items from '../src/client/game/components/ui/items';
+import Players from '../src/client/game/components/ui/players';
 
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
@@ -20,12 +21,29 @@ storiesOf('Button', module)
 
 storiesOf('Card', module).add('with random children', ()=>
   <Card><p>Hey</p></Card>
+);
+
+storiesOf('Card', module).add('with no text', ()=>
+  <Card><p/></Card>
 )
 
+
+const player1 = {
+  id: 0,
+  name: 'Robin'
+};
+const player2 = {
+  id: 1,
+  name: 'Jay'
+};
+const players = [player1, player2];
+
 storiesOf('Player', module).add('with random name', ()=>
-  <Player player={{
-    name: 'Jay'
-  }}/>
+  <Player player={player1}/>
+)
+
+storiesOf('Players', module).add('with two players', () => 
+  <Players players = {players}/>
 )
 
 const item = {
@@ -43,3 +61,4 @@ storiesOf('Item', module).add('with pistol', ()=>
     image: '../src/client/game/resources/m9-pistol.jpg'
   }}/>
 )
+

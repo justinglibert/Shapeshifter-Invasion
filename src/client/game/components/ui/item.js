@@ -6,10 +6,11 @@ class Item extends React.Component {
         return (
             <Card>
                 <div>
-                    <img src={this.props.item.image} /> 
-                    
-                        {this.props.item.name}
-                   
+                    <p>
+                        <img src={this.props.item.image} /> 
+                        
+                            {this.props.item.name}
+                    </p>
                 </div>
             </Card>
         );
