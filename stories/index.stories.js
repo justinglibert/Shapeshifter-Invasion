@@ -17,6 +17,8 @@ import Problems from '../src/client/game/components/ui/problems';
 import Proposition from '../src/client/game/components/ui/proposition';
 import Propositions from '../src/client/game/components/ui/propositions';
 import Choice from '../src/client/game/components/ui/choice';
+import ItemOption from '../src/client/game/components/ui/itemOption';
+import ItemOptions from '../src/client/game/components/ui/itemOptions';
 
 import '../src/client/index.scss';
 
@@ -56,20 +58,32 @@ storiesOf('Players', module).add('with two players', () =>
   <Players players = {players}/>
 )
 
-const item = {
-  name: 'pistol',
-  image: '../src/client/game/resources/m9-pistol.jpg'
+const pistol = {
+  name: 'Pistol',
+  image: '../src/client/game/resources/m9-pistol.jpg',
+  description: 'A simple pistol that deals damage.'
 };
 
+const screwdriver = {
+  name: 'Screwdriver',
+  image: '',
+  description: 'A trusty tool that fixes the engine'
+}
+
 storiesOf('Items', module).add('with 3 pistols', ()=>
-  <Items items={[item, item, item]}/>
+  <Items items={[pistol, screwdriverl]}/>
 )
 
 storiesOf('Item', module).add('with pistol', ()=>
-  <Item item={{
-    name: 'pistol',
-    image: '../src/client/game/resources/m9-pistol.jpg'
-  }}/>
+  <Item item={pistol}/>
+)
+
+storiesOf('ItemOption', module).add('of pistol', ()=>
+  <ItemOption item={pistol}/>
+)
+
+storiesOf('ItemOptions', module).add('with pistols', ()=>
+  <ItemOptions items={[pistol, screwdriver]}/>
 )
 
 const oxygen = {
