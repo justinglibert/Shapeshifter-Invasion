@@ -108,7 +108,7 @@ const TurnExample = Game({
                     ctx.events.changeActionPlayers(['1']);
                     return G
                   } else if (mostVotedProposal.proposal === 1){
-                    ctx.events.endPhase('vote');
+                    ctx.events.endPhase('propose');
                     return G
                   } else {
                     return G
