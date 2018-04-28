@@ -16,10 +16,23 @@ import { Game } from 'boardgame.io/core';
  * https://opensource.org/licenses/MIT.
  */
 
+
+ //Proposals
+//  let a = {
+//      type: 'SEND',
+//      who: 0,
+//      where: 
+//  }
 const TurnExample = Game({
     name: 'turnorder',
 
     setup: () => ({
+        rooms: [
+            {
+                name: 'Kitchen',
+                deadly
+            }
+        ],
         proposals: [],
         players: [
             {
@@ -108,7 +121,7 @@ const TurnExample = Game({
                     ctx.events.changeActionPlayers(['1']);
                     return G
                   } else if (mostVotedProposal.proposal === 1){
-                    ctx.events.endPhase('vote');
+                    ctx.events.endPhase('propose');
                     return G
                   } else {
                     return G
