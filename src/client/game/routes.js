@@ -10,7 +10,7 @@ import Multiplayer from './components/multiplayer';
 
 const routes = [
   {
-    path: '/game',
+    path: '/game/:id',
     text: 'Multiplayer',
     component: Multiplayer,
   },

@@ -8,20 +8,22 @@
 
 import React from 'react';
 import { Client } from 'boardgame.io/react';
-import SpaceGame from '../game';
+import {SpaceGame, TurnExample} from '../game';
 import SpaceBoard from './board';
 import { Button, Intent, Spinner } from "@blueprintjs/core";
 const MySpinner = <Spinner intent={Intent.PRIMARY} />;
+const Game = TurnExample
 const App = Client({
-  game: SpaceGame,
+  game: Game,
   board: SpaceBoard,
   multiplayer: true,
   debug: true,
+  numPlayers: 2
 });
 
-const Multiplayer = () => (
+const Multiplayer = ({match}) => (
   <div style={{ padding: 50 }}>
-    <App playerID="0" />
+    <App playerID={match.params.id} />
   </div>
 );
 

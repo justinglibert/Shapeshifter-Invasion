@@ -12,7 +12,9 @@ import KoaHelmet from 'koa-helmet';
 import KoaWebpack from 'koa-webpack';
 import WebpackConfig from './webpack.dev.js';
 import { Server } from 'boardgame.io/server';
-import Game from './client/game/game';
+import {TurnExample} from './client/game/game';
+
+const Game = TurnExample;
 
 const PORT = process.env.PORT || 8000;
 const DEV = process.env.NODE_ENV === 'development';
@@ -32,7 +34,15 @@ if (PROD) {
   server.app.use(KoaStatic(path.join(__dirname, 'dist')));
   server.app.use(KoaHelmet());
 }
-
+console.log(server.app.silent)
+server.app.expose = true;
 server.run(PORT, () => {
   console.log(`Serving at: http://localhost:${PORT}/`);
 });
+
+process.on("uncaughtException", exception => {
+  console.log(exception)
+})
+process.on("unhandledRejection", err => {
+  console.log(err.stack)
+})

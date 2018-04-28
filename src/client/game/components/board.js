@@ -36,6 +36,7 @@ class Board extends React.Component {
     return (
       <div>
         {disconnected}
+        {this.props.playerID}
       </div>
     );
   }

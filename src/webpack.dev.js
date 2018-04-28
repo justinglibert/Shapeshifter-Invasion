@@ -27,7 +27,7 @@ module.exports = {
       template: path.resolve(__dirname, './index.html'),
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: `http://localhost:${port}/` }),
+    //new OpenBrowserPlugin({ url: `http://localhost:${port}/` }),
   ],
 
   module: {
