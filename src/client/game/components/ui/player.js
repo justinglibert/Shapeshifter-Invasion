@@ -5,9 +5,10 @@ class Player extends React.Component {
     render() {
         return (
             <Card>
-                {this.props.player.name}
+                <p>{this.props.player.id} {this.props.player.name}</p>
             </Card>
         );
     }
 }
-export default Player
+
+export default Player;
