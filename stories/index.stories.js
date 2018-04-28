@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { storiesOf } from '@storybook/react';
+import { storiesOf, addDecorator } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
@@ -19,6 +19,8 @@ import Propositions from '../src/client/game/components/ui/propositions';
 import Choice from '../src/client/game/components/ui/choice';
 
 import '../src/client/index.scss';
+
+addDecorator(fn => <div className="pt-dark">{fn()}</div>)
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
