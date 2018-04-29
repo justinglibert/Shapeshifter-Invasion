@@ -165,6 +165,13 @@ const TurnExample = Game({
                 console.log('HasBeenSelected: ' + items.includes(i.id));
                 return items.includes(i.id);
             });
+            let roomId = newG.rooms.findIndex((r) => r.name === newG.roomBeingVisited.name)
+            console.log(roomId)
+            let newItemsForRoom = newG.rooms[roomId].items.filter(i => {
+                return !items.includes(i.id);
+            });
+            console.log(newItemsForRoom)
+            newG.rooms[roomId].items = newItemsForRoom;
             console.log('NewItems: ' + JSON.stringify(newItems));
             newG.items = [...newG.items, ...newItems];
             console.log('FinalItems: ' + JSON.stringify(newG.items));
