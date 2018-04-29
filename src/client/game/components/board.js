@@ -67,7 +67,7 @@ class Board extends React.Component {
             disconnected = <p>Disconnected!</p>;
         }
         return (
-            <div className="pt-dark">
+            <div>
                 {disconnected}
                 <p>Current player: {this.props.playerID}</p>
                 {amIPlaying ? "It's your turn" : "Please wait for your turn..."}
