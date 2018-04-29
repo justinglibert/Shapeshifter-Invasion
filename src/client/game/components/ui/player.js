@@ -12,7 +12,6 @@ class Player extends React.Component {
     return <Tag intent={Intent.PRIMARY}>You!</Tag>
   }
   render() {
-    console.log(this.props.me)
     return (
       <Card style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', marginBottom: '1em'}} className={this.props.isDoingItsTurn && "dropshadow"}>
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
