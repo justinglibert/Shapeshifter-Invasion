@@ -112,11 +112,10 @@ class Board extends React.Component {
             <div>
                 <Toaster ref={ref => this.toaster = ref}></Toaster>
                 <div style={{ marginBottom: '1em' }}>
-                {disconnected}
-                <Button icon="ninja" large style={{margin: "0 .5rem"}}>
-                    You are player {this.props.playerID}
-                </Button>
-                {amIPlaying ? "It's your turn" : "Please wait for your turn..."}
+                    {disconnected}
+                    <span style={{ marginLeft: '1em' }}>
+                        {amIPlaying ? "It's your turn" : "Please wait for your turn..."}
+                    </span>
                 </div>
 
                 {amIPlaying && this.props.ctx.phase === 'propose' ? <Choice submit={(p) => {
