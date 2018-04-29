@@ -44,16 +44,33 @@ class Board extends React.Component {
         selected: ''
     };
 
-    UNSAFE_componentWillReceiveProps(nextProps){
-      if(this.props.G.announcement !== nextProps.G.announcement){
-        alert("announcement")
-        this.announcement = (
-          <Toaster><Toast message={nextProps.G.announcement}/></Toaster>
-        )
+    compareMessage = (a,b) =>{
+      if(!a && !b){
+        return false
+      } else if(!a){
+        return true
+      } else if(!b){
+        return true
+      } else if(a.message !== b.message){
+        return true
+      } else {
+        return false
       }
     }
 
-    makeSentence(proposal, players, room, problems) {
+    UNSAFE_componentWillReceiveProps(nextProps){
+      if((this.compareMessage(this.props.G.announcement, nextProps.G.announcement)) && nextProps.G.announcement.message){
+        console.log(this.props.G.announcement, nextProps.G.announcement)
+        let toast = {
+          message: nextProps.G.announcement.message,
+          intent: nextProps.G.announcement.intent,
+          timeout: 5000
+        }
+        this.toaster.show(toast)
+      }
+    }
+
+    makeSentence(proposal, players, rooms, problems) {
       switch(proposal.type) {
         case 'SEND':
           return `Send ${players[proposal.player].name} to ${rooms[proposal.room].name}`
@@ -91,7 +108,7 @@ class Board extends React.Component {
         }
         return (
             <div>
-                {this.annoucement}
+                <Toaster ref={ref => this.toaster = ref} />
                 {disconnected}
                 <p>Current player: {this.props.playerID}</p>
                 {amIPlaying ? "It's your turn" : "Please wait for your turn..."}

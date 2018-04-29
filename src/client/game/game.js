@@ -7,7 +7,9 @@
  */
 
 import { Game } from 'boardgame.io/core';
-
+import {
+    Intent,
+} from "@blueprintjs/core";
 /*
  * Copyright 2018 The boardgame.io Authors
  *
@@ -34,6 +36,12 @@ const findNextAlivePlayer = G => {
     });
 };
 
+const announce = (G, message, intent) => {
+    G.announcement.message = message
+    G.announcement.intent = intent
+    return  G
+}
+
 const inflictDamageToSpaceship = (spaceship, problems)=> {
     console.log("Damaging the spaceship")
     let newResources = spaceship.resources
@@ -50,6 +58,7 @@ const TurnExample = Game({
     name: 'turnorder',
     setup: () => ({
         shouldHarmShip: false,
+        announcement: {},
         spaceship: {
             resources: [
                 {
@@ -276,7 +285,7 @@ const TurnExample = Game({
                         case 'THROW': 
                             let deadPlayer = mostVotedProposal.proposal.player;
                             newG.players[deadPlayer].alive = false;
-                            newG.announcement = `${newG.players[deadPlayer].name} has been thrown in Space`
+                            newG = announce(newG, `${newG.players[deadPlayer].name} has been thrown in Space`, Intent.DANGER)
                             ctx.events.endPhase('propose');
                             return newG;
                         case 'FIX':
