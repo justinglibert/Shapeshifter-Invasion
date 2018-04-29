@@ -23,7 +23,7 @@ import Choice from './ui/choice';
 import ChooseItems from './ui/chooseItems';
 import AlienInfo from './ui/alienInfo';
 
-import { Toast, Toaster } from "@blueprintjs/core";
+import { Toast, Toaster, Button } from "@blueprintjs/core";
 
 class Board extends React.Component {
     static propTypes = {
@@ -85,16 +85,21 @@ class Board extends React.Component {
           }
         })
         
-        let disconnected = <p>Connected!</p>;
+        let disconnected = <Button large intent="success" icon='tick' disabled>Connected!</Button>;
         if (this.props.isMultiplayer && !this.props.isConnected) {
-            disconnected = <p>Disconnected!</p>;
+            disconnected = <Button large intent="danger" icon='issue' disabled>Disconnected!</Button>;
         }
         return (
             <div>
                 {this.annoucement}
+                <div style={{ marginBottom: '1em' }}>
                 {disconnected}
-                <p>Current player: {this.props.playerID}</p>
+                <Button icon="ninja" large style={{margin: "0 .5rem"}}>
+                    Current player: {this.props.playerID}
+                </Button>
                 {amIPlaying ? "It's your turn" : "Please wait for your turn..."}
+                </div>
+
                 {amIPlaying && this.props.ctx.phase === 'propose' ? <Choice submit={(p) => {
                   this.props.moves.propose(p)
                 }} players={players} rooms={rooms} problems={problems}/> : undefined}
