@@ -173,7 +173,7 @@ class Board extends React.Component {
         <Items items={this.props.G.items} />
         <Problems problems={this.props.G.problems} />
     </div>} />
-    {players[this.props.playerID].aliens && (<Tab id="mappo" title="Alien" panel={<Mappo rooms={rooms}/>}/>)}
+    {players[this.props.playerID].aliens && (<Tab id="mappo" title="Alien Knowledge" panel={<Mappo rooms={rooms}/>}/>)}
 </Tabs>
                     </div>
                 </div>

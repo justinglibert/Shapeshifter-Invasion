@@ -33,7 +33,8 @@ class ChooseItems extends React.Component {
         this.props.room.items.map(
             (item, i) => this.createCheckbox(item.name, (isChecked) => {
                 let oldItems = this.state.items
-                oldItems[i].selected = isChecked
+                oldItems[i].selected = isChecked.target.checked
+                console.log(i, oldItems[i].selected)
                 this.setState({
                     items: oldItems
                 })
@@ -50,6 +51,9 @@ class ChooseItems extends React.Component {
                 <div className="pt-dialog-footer">
                     <Button onClick={() => {
                         console.log(this.state.items)
+                        console.log(this.state.items.filter((i)=>{
+                            return i.selected
+                        }).map(i => i.id))
                         this.props.submit(this.state.items.filter((i)=>{
                             return i.selected
                         }).map(i => i.id))
