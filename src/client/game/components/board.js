@@ -138,7 +138,7 @@ class Board extends React.Component {
                             width: '20%'
                         }}
                     >
-                        <Players players={this.props.G.players} currentPlayer={this.props.ctx.currentPlayer}/>
+                        <Players players={this.props.G.players} currentPlayer={this.props.ctx.currentPlayer} me={this.props.playerID} />
                         <ShipStatus ship={this.props.G.spaceship} />
                     </div>
                     <div

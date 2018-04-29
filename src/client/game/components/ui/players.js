@@ -9,8 +9,9 @@ class Players extends React.Component {
                 <Card>
                     <p>Players</p>
                     <div>
+                        <p>Me: {this.props.me} {typeof this.props.me}</p>
                         {this.props.players.map( (player) => (
-                            <Player player = {player} isDoingItsTurn={player.id == this.props.currentPlayer}/>
+                            <Player player = {player} isMe={player.id == this.props.me} isDoingItsTurn={player.id == this.props.currentPlayer}/>
                         ))}
                     </div>
                 </Card>

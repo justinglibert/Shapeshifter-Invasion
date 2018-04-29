@@ -1,15 +1,25 @@
 import React from "react";
 import colours from './colours';
-import { Card, Elevation, Icon } from "@blueprintjs/core";
+import { Card, Elevation, Icon, Tag, Intent } from "@blueprintjs/core";
 
 
 class Player extends React.Component {
+  renderMe() {
+    if (!this.props.isMe) {
+      return null;
+    }
+
+    return <Tag intent={Intent.PRIMARY}>You!</Tag>
+  }
   render() {
     console.log(this.props.me)
     return (
-      <Card style={{ display: "flex", flexDirection: "row", alignItems: 'center', marginTop: '10px', marginBottom: '10px'  }} className={this.props.isDoingItsTurn && "dropshadow"}>
-      <Icon icon="user" color={colours[this.props.player.id % 30]} />
-        <p style={{margin: '0px'}}> &nbsp; {this.props.player.name}</p>
+      <Card style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', marginBottom: '1em'}} className={this.props.isDoingItsTurn && "dropshadow"}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          <Icon icon="user" color={colours[this.props.player.id % 30]} />
+          &nbsp; {this.props.player.name}
+        </div>
+        { this.renderMe() }
       </Card>
     );
   }
