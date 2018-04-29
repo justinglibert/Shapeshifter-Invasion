@@ -1,12 +1,15 @@
 import React from 'react'
 import Card from './card'
+import { Callout } from "@blueprintjs/core";
 
 class Problem extends React.Component {
     render() {
         return (
-            <Card>
-                <h4> {this.props.problem.name} </h4>
-                <ul>
+            <Callout intent="danger" title={this.props.problem.name}>
+                <ul style={{
+                    listStyle: 'none',
+                    paddingLeft: 0,
+                }}>
                     <li>
                         <i>Description:</i> {this.props.problem.description}
                     </li>
@@ -20,7 +23,7 @@ class Problem extends React.Component {
                         <i>Decrease rate:</i> {this.props.problem.decreaseRate}
                     </li>
                 </ul>
-            </Card>    
+            </Callout>
         )
     }
 }
