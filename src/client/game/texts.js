@@ -8,7 +8,7 @@ export const ProblemData = [
         {name: 'Engine Failure', description: 'Engine C has failed and the spaceship is losing speed!', solution: ['repairKit'], decreaseRate: 10}
 ];
    
-export const DangerData = ['Miniature Blackhole', 'Radioactivity', 'Space Cockroaches']
+export const DangerData = ['Miniature Blackhole', 'Radioactivity', 'Space Cockroaches', 'Xhwathu Gravity Trap']
     
 export const ItemData = [
         {name: 'Food supply', id: 'food'},
