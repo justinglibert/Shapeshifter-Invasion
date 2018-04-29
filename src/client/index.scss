@@ -5,3 +5,12 @@
 body {
     background-color: #293742;
 }
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 10px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+  }

@@ -6,16 +6,16 @@ class Status extends React.Component {
 
     render() {
         return (
-            <Card style={{display:'flex', flexDirection:'row'}}>
-                <div>
+            <Card style={{display:'flex', flexDirection:'row', alignItems: 'center'}}>
+                <span style={{margin: '10px'}}>
                     {this.props.resource.name}:
-                </div>
-                <div>
+                </span>
+
                     <ProgressBar animate={false} stripes={false} value={(this.props.resource.amount)/ 10}/>
-                </div>
-                <div>
+                
+                <span style={{margin: '10px'}}>
                     -{this.props.decrease} /turn
-                </div>
+                </span>
             </Card>
         );
     };
