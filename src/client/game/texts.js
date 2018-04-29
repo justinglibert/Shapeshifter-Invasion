@@ -23,7 +23,22 @@ export const StatusData = [
         {name: 'Water', id: 'water', value: 100}, 
         {name: 'Food', id: 'food', value: 100},
         {name: 'Distance to Earth', id: 'distance', value: 200}, 
-        {name: 'Trajectory', id: 'trajectory', value: true}, 
-        {name: 'Radio Signal', id: 'radio', value: true},
-        {name: 'Engine', id: 'engine', value: true}
+        {name: 'Trajectory', id: 'trajectory', value: 10}, 
+        {name: 'Radio Signal', id: 'radio', value: 10},
+        {name: 'Engine', id: 'engine', value: 10}
+];
+
+export const RoomsData = [
+        {name: 'Cockpit', id:'cockpit'},
+        {name: 'Engine Room', id: 'engine'},
+        {name: 'Food Storage', id: 'foodStorage'},
+        {name: 'Water Tank', id: 'waterTank'},
+        {name: 'Radio Room', id: 'radioRoom'},
+        {name: 'East Warehouse', id: 'eastWarehouse'},
+        {name: 'West Warehouse', id: 'westWarehous'},
+        {name: 'South Warehouse', id: 'southWarehouse'},
+        {name: 'North Warehouse', id: 'northWarehouse'},
+        {name: "Bathroom", id: 'bathroom'},
+        {name: "Medical Ward", id: 'medicalWard'},
+        {name: 'Data Room', id: 'dataRoom'}
 ];
