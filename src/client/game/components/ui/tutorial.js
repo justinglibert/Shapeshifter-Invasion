@@ -9,20 +9,15 @@ class Tutorial extends React.Component {
 
     render() {
         return (
-            <Dialog isOpen={true}  style={{minWidth: '1000px'}}isCloseButtonShown={false} title="Message From DELTA">
+            <Dialog isOpen={true}  style={{minWidth: '600px'}}isCloseButtonShown={false} title="Message From DELTA">
                 <div className="pt-dialog-body" style={{display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent: 'space-between'}}>
                     <Icon icon={"delta"} iconSize={100} intent={Intent.PRIMARY} />
                     <h3 style={{marginTop: '20px'}}>I am glad you are finally awake. I am your on-board AI -- Delta. 2 hours ago, our vessel was breached by Xhwathu Shapeshifters, who have now disguised themselves as humans.</h3>
 
-<h3>During the breach, our vessel was damaged. Moreover, there are now various dangers and traps scattered across the ship.</h3>
 
 <h3>During the breach, our vessel was damaged. Moreover, there are now various dangers and traps scattered across the ship.
-The Xhwathu Shapeshifters are outnumbered by us, but their nine senses allow them to know the exact locations for dangers and traps. They won\'t directly attack you, but they will lead you towards these dangers</h3>
+The Xhwathu Shapeshifters are outnumbered by us, but their nine senses allow them to know the exact locations for dangers and traps. They won't directly attack you, but they will lead you towards these dangers</h3>
 
-<h3>During the breach, our vessel was damaged. Moreover, there are now various dangers and traps scattered across the ship.
-Collaborate with each other, discuss to find out the Shapeshifters, find tools to fix the spaceship, and survive until we land on Earth.</h3>
-
-<h3>During the breach, our vessel was damaged. Moreover, there are now various dangers and traps scattered across the ship.</h3>
 <h3>Stay safe.</h3>
                 </div>
                 <div className="pt-dialog-footer">
