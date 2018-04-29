@@ -1,29 +1,21 @@
 import React from 'react';
-import Card from './card'
+import Card from './card';
+import { ProgressBar } from "@blueprintjs/core";
 
 class Status extends React.Component {
 
-    numberToBar(n) {
-        const dark = '▓';
-        const light = '░';
-        let output = '░░░░░░░░░░';
-        let darkBar = ''
-    
-        output = output.slice(0, 10-n);
-    
-        for (let i = 0; i < n; i++){
-            darkBar += '▓';
-        };
-    
-        return darkBar + output;
-    };
-
     render() {
         return (
-            <Card>
-                <p>
-                    {this.props.resource.name}: {this.numberToBar(this.props.resource.amount)} -{this.props.decrease} /turn
-                </p>
+            <Card style={{display:'flex', flexDirection:'row', alignItems: 'center'}}>
+                <span style={{margin: '10px'}}>
+                    {this.props.resource.name}:
+                </span>
+
+                    <ProgressBar animate={false} stripes={false} value={(this.props.resource.amount)/ 10}/>
+                
+                <span style={{margin: '10px'}}>
+                    -{this.props.decrease} /turn
+                </span>
             </Card>
         );
     };
