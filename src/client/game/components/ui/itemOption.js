@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './card';
+import { Card, Elevation, Checkbox} from "@blueprintjs/core";
 
 class ItemOption extends React.Component {
     render() {
@@ -8,7 +8,7 @@ class ItemOption extends React.Component {
                 <Card>
                     <div>{this.props.item.name}</div>
                     <div>
-                        <input type="checkbox" id={this.props.item.name} />
+                        <Checkbox type="checkbox" id={this.props.item.name}/>
                         <img src={this.props.item.image}/>
                         {this.props.item.description}
                     </div>

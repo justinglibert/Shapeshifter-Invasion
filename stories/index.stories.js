@@ -71,7 +71,7 @@ const screwdriver = {
 }
 
 storiesOf('Items', module).add('with 3 pistols', ()=>
-  <Items items={[pistol, screwdriverl]}/>
+  <Items items={[pistol, screwdriver]}/>
 )
 
 storiesOf('Item', module).add('with pistol', ()=>

@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from './card';
 import ItemOption from './itemOption';
+import { Card, Elevation,Button } from "@blueprintjs/core";
 
 class ItemOptions extends React.Component {
     render() {
@@ -14,7 +14,7 @@ class ItemOptions extends React.Component {
                         ))}
                     </div>
                     <div>
-                        <button type="button">Pick</button>
+                        <Button type="button">Pick</Button>
                     </div>
                 </Card>
             </div>

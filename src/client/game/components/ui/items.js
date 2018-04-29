@@ -2,6 +2,7 @@ import React from 'react';
 import Card from './card';
 import Item from './item';
 
+
 class Items extends React.Component {
     render() {
         return (
