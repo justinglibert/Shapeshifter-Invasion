@@ -24,6 +24,6 @@ export const StatusData = [
         {name: 'Food', id: 'food', value: 100},
         {name: 'Distance to Earth', id: 'distance', value: 200}, 
         {name: 'Trajectory', id: 'trajectory', value: true}, 
-        {name: 'Radio Signal', id: 'radio', value: true}
-        {name: 'Engine' id: 'engine', value: true}
+        {name: 'Radio Signal', id: 'radio', value: true},
+        {name: 'Engine', id: 'engine', value: true}
 ];
