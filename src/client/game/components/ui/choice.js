@@ -25,7 +25,7 @@ const BPSelect = props => {
 
 
 const checkSimilitude = (type, proposals, state) =>  {
-    let {sendWho, sendWhere, throwWho, fixWhat} = state
+    let {sendWho, sendWhere, throwWho, fixWhat, probeWhere} = state
     switch(type){
         case 'SEND':
             return proposals.filter(p => p.proposal.type === 'SEND').some((p) => {
@@ -39,6 +39,10 @@ const checkSimilitude = (type, proposals, state) =>  {
             return proposals.filter(p => p.proposal.type === 'FIX').some((p) => {
               return p.proposal.problemId == fixWhat
             })
+        case 'PROBE':
+            return proposals.filter(p => p.proposal.type === 'PROBE').some((p) => {
+               return p.proposal.room == probeWhere
+            })
         default:
             return false
     }
@@ -51,10 +55,11 @@ class Choice extends React.Component {
             sendWhere: 0,
             throwWho: props.players[0].id,
             fixWhat: props.problems.findIndex(p => p.active),
+            probeWhere: 0
         };
     }
     render() {
-        const { sendWho, sendWhere, throwWho, fixWhat } = this.state;
+        const { sendWho, sendWhere, throwWho, fixWhat, probeWhere } = this.state;
         return (
             <Dialog isOpen={true} title="Make a proposal to the other crew members" isCloseButtonShown={false}>
                 <div className="pt-dialog-body" >
@@ -181,6 +186,41 @@ class Choice extends React.Component {
                             this.props.submit({
                                 type: 'FIX',
                                 problemId: fixWhat,
+                            })
+                        }}>Submit</Button>
+                    </div>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingBottom: '1em',
+                            justifyContent: 'space-between'
+                        }}
+                        className="pt-form-group pt-inline"
+                    >
+                        <div>
+                        Probe{' '}
+                        <BPSelect
+                            name="probeWhere"
+                            value={probeWhere}
+                            onChange={o => {
+                                this.setState({
+                                    probeWhere: o.value
+                                });
+                            }}
+
+                        >{this.props.rooms.map((r, i) => {
+                            return (<option value={i}>
+                                {r.name}
+                            </option>);
+                        })}</BPSelect>
+                        </div>
+
+                            <Button disabled={!this.props.hasProbes || checkSimilitude('PROBE', this.props.proposals, this.state)} onClick={() => {
+                            this.props.submit({
+                                type: 'PROBE',
+                                room: probeWhere,
                             })
                         }}>Submit</Button>
                     </div>

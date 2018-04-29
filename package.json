@@ -4,7 +4,7 @@
   "description": "library for turn-based games",
   "repository": "https://github.com/google/boardgame.io",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development babel-watch --presets=env,stage-0 src/server.js",
+    "dev": "cross-env NODE_ENV=development PORT=9000 babel-watch --presets=env,stage-0 src/server.js",
     "lint": "eslint .",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook -c storybook -o docs/storybook",

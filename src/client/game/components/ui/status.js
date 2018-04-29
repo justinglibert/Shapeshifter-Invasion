@@ -5,6 +5,7 @@ import { ProgressBar, Intent } from "@blueprintjs/core";
 class Status extends React.Component {
 
     render() {
+        console.log(this.props.resource)
         return (
             <Card style={{display:'flex', flexDirection:'column', alignItems: 'center'}}>
             <div style={{width: '100%', display:'flex', flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}} >
@@ -15,7 +16,7 @@ class Status extends React.Component {
                     -{this.props.decrease} /turn
                 </span>
             </div>
-                    <ProgressBar animate={false} stripes={false} intent={this.props.resource.value > 50 ? Intent.SUCCESS : Intent.WARNING} value={(this.props.resource.value)}/>
+                    <ProgressBar animate={false} stripes={false} intent={this.props.resource.value > 50 ? Intent.SUCCESS : Intent.WARNING} value={(this.props.resource.value) /100}/>
                 
                
             </Card>

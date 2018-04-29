@@ -12,3 +12,9 @@
  let c = [
      'screwdriver'
  ]
+
+
+ let p = {
+     type: 'PROBE',
+     room: 0
+ }

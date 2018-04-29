@@ -82,6 +82,8 @@ class Board extends React.Component {
         return `Throw ${players[proposal.player].name} in Space`
         case 'FIX':
           return `Fix ${problems[proposal.problemId].name}`
+        case 'PROBE':
+        return `Probe ${rooms[proposal.room].name}`
         default:
           return 'Error'
       }
@@ -124,7 +126,7 @@ class Board extends React.Component {
 
                 {amIPlaying && this.props.ctx.phase === 'propose' && players[this.props.playerID].hasDoneTutorial ? <Choice submit={(p) => {
                   this.props.moves.propose(p)
-                }} players={players} rooms={rooms} problems={problems} proposals={this.props.G.proposals}/> : undefined}
+                }} players={players} rooms={rooms} problems={problems} proposals={this.props.G.proposals} hasProbes={this.props.G.items.findIndex(i => i.id === 'drone') !== -1}/> : undefined}
                 {amIPlaying && this.props.ctx.phase === 'resolve' && this.props.G.roomBeingVisited ? <ChooseItems submit={(i) => {
                   this.props.moves.pickUpItems(i)
                   //console.log(i)

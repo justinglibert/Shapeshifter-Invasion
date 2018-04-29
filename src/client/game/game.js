@@ -95,10 +95,11 @@ const inflictDamageToSpaceship = (spaceship, problems)=> {
     let newResources = spaceship.resources
     spaceship.resources.forEach((r, i)=>{
         let malus = 0
-        problems.filter(p => p.active).filter(p => p.affected === r.name).forEach((p)=>{
+        problems.filter(p => p.active).filter(p => p.affected === r.id).forEach((p)=>{
             malus += p.decreaseRate
         })
-        newResources[i].amount = newResources[i].amount - malus
+        console.log("Malus: ", malus)
+        newResources[i].value = newResources[i].value - malus
     })
     return newResources 
 }
@@ -153,7 +154,10 @@ const TurnExample = Game({
         ...data,
         roomBeingVisited: undefined,
         proposals: [],
-        items: [],
+        items: [{
+            id: 'drone',
+            name: 'RECON Drone X7'
+        }],
         players: [...players]
     }),
 
@@ -239,7 +243,7 @@ const TurnExample = Game({
                         newG.spaceship.resources = inflictDamageToSpaceship(newG.spaceship, newG.problems)
                         newG.shouldHarmShip = false
                         newG = announce(newG, `The spaceship has been damaged`, Intent.DANGER)
-                        console.log("Infected damage: " + JSON.stringify(newG.spaceship.resources))
+                        console.log("Inflected damage: " + JSON.stringify(newG.spaceship.resources))
                     }
                     return newG
                 },
@@ -307,6 +311,7 @@ const TurnExample = Game({
                             let { player, room } = mostVotedProposal.proposal;
                             if (G.rooms[room].deadly) {
                                 newG.players[player].alive = false;
+                                announce(newG, `${newG.players[player].name} dissapeared`, Intent.DANGER)
                                 ctx.events.endPhase('propose');
                                 return newG;
                             } else {
@@ -323,6 +328,21 @@ const TurnExample = Game({
                             newG = announce(newG, `${newG.players[deadPlayer].name} has been thrown in Space`, Intent.DANGER)
                             ctx.events.endPhase('propose');
                             return newG;
+                        case 'PROBE':
+                            let roomToProbe = mostVotedProposal.proposal.room
+                            if (G.rooms[roomToProbe].deadly) {
+                                newG = announce(newG, `${G.rooms[roomToProbe].name} is dangerous! Unfortunately, the probe has been destroyed in the process`, Intent.WARNING)
+                                let indexOfFirstProbe = newG.items.findIndex((i)=> i.id ='drone')
+                                console.log("indexOfFirstProbe ", indexOfFirstProbe)
+                                newG.items = newG.items.filter((item, i) => i !== indexOfFirstProbe)
+                                console.log(newG.items)
+                                ctx.events.endPhase('propose');
+                                return newG;
+                            } else {
+                                newG = announce(newG, `${newG.rooms[roomToProbe].name} is Safe !`, Intent.SUCCESS)
+                                ctx.events.endPhase('propose');
+                                return newG;
+                            }
                         case 'FIX':
                             let { problemId } = mostVotedProposal.proposal;
                             let problem = newG.problems[problemId];
