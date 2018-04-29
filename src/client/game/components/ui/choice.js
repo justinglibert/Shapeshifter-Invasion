@@ -4,9 +4,9 @@ import Card from './card';
 import Select from 'react-select';
 //var TextSelect = require('react-textselect')
 //<TextSelect options={['text select', 'react component', 'dropdown']} active={this.state.selectedOption} onChange={this.onTextSelectChange} />
-import Modal from 'react-responsive-modal/lib/css';
+
 import 'react-select/dist/react-select.css';
-import { Button } from "@blueprintjs/core";
+import { Button, Dialog } from "@blueprintjs/core";
 
 const BPSelect = props => {
     let { children, ...rest} = props;
@@ -27,142 +27,141 @@ class Choice extends React.Component {
             sendWho: undefined,
             sendWhere: undefined,
             throwWho: undefined,
-            fixWhat: undefined
+            fixWhat: undefined,
         };
     }
     render() {
         const { sendWho, sendWhere, throwWho, fixWhat } = this.state;
         return (
-            <Modal open={true} little>
-                <div style={{ minWidth: '700px' }}>
-                    <h2>Select an Action</h2>
-                    <Card>
-                        <div
-                            style={{
-                                marginTop: '10px',
-                                minHeight: '40px',
-                                display: 'flex',
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                margin: '20px',
-                                justifyContent: 'space-between'
+            <Dialog isOpen={true} title="Select an action">
+                <div className="pt-dialog-body" >
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingBottom: '1em',
+                            justifyContent: 'space-between'
+                        }}
+                    >
+                        <div>
+                        Send{' '}
+                        <BPSelect
+                            name="sendWho"
+                            value={sendWho}
+                            onChange={o => {
+                                this.setState({
+                                    sendWho: o.value
+                                });
                             }}
                         >
-                            Send{' '}
-                            <BPSelect
-                                style={{ minWidth: '200px' }}
-                                name="sendWho"
-                                value={sendWho}
-                                onChange={o => {
-                                    this.setState({
-                                        sendWho: o.value
-                                    });
-                                }}
-                            >
-                                {
-                                    this.props.players
-                                    .filter(p => p.alive)
-                                    .map((p, i) => {
-                                        return (<option value={p.id}>
-                                            {p.name}
-                                        </option>);
-                                    })
-                                }
-                            </BPSelect>{' '}
-                            to{' '}
-                            <BPSelect
-                                name="sendWhere"
-                                style={{ minWidth: '200px' }}
-                                value={sendWhere}
-                                onChange={o => {
-                                    this.setState({
-                                        sendWhere: o.value
-                                    });
-                                }}
-                            >{this.props.rooms.map((r, i) => {
-                                    return (<option value={i}>
-                                        {r.name}
+                            {
+                                this.props.players
+                                .filter(p => p.alive)
+                                .map((p, i) => {
+                                    return (<option value={p.id}>
+                                        {p.name}
                                     </option>);
-                                })}
-                            </BPSelect>
-                            <Button disabled={(sendWho === undefined && sendWhere === undefined)} onClick={() => {
-                                this.props.submit({
-                                    type: 'SEND',
-                                    player: sendWho,
-                                    room: sendWhere
                                 })
-                            }}>Submit</Button>
-                        </div>
-                        <div
-                            style={{
-                                minHeight: '40px',
-                                display: 'flex',
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                margin: '20px',
-                                justifyContent: 'space-between'
+                            }
+                        </BPSelect>{' '}
+                        to{' '}
+                        <BPSelect
+                            name="sendWhere"
+                            value={sendWhere}
+                            onChange={o => {
+                                this.setState({
+                                    sendWhere: o.value
+                                });
                             }}
-                        >
-                            Throw{' '}
-                            <BPSelect
-                                style={{ minWidth: '200px' }}
-                                name="throwWho"
-                                value={throwWho}
-                                onChange={o => {
-                                    this.setState({
-                                        throwWho: o.value
-                                    });
-                                }}
-                            >{this.props.players
-                                    .filter(p => p.alive)
-                                    .map((p, i) => {
-                                        return (<option value={p.id}>
-                                            {p.name}
-                                        </option>);
-                                    })}</BPSelect>{' '}
-                            in Space
-                            <Button disabled={throwWho === undefined} onClick={() => {
-                                this.props.submit({
-                                    type: 'THROW',
-                                    player: throwWho,
-                                })
-                            }}>Submit</Button>
+                        >{this.props.rooms.map((r, i) => {
+                                return (<option value={i}>
+                                    {r.name}
+                                </option>);
+                            })}
+                        </BPSelect>
                         </div>
-                        <div
-                            style={{
-                                marginBottom: '10px',
-                                minHeight: '40px',
-                                display: 'flex',
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                margin: '20px',
-                                justifyContent: 'space-between'
-                            }}
-                        >
-                            Fix{' '}
-                            <BPSelect
-                                name="fixWhat"
-                                style={{ minWidth: '200px' }}
-                                value={fixWhat}
-                                onChange={o => {
-                                    this.setState({
-                                        fixWhat: o.value
-                                    });
-                                }}
 
-                            >{this.props.problems.map((p, i) => {
-                                    return (<option value={i}>{p.name}</option>)
-                                })}</BPSelect>
-                             <Button disabled={(fixWhat) === undefined} onClick={() => {
-                                this.props.submit({
-                                    type: 'FIX',
-                                    problemId: fixWhat,
-                                })
-                            }}>Submit</Button>
+                        <Button onClick={() => {
+                            this.props.submit({
+                                type: 'SEND',
+                                player: sendWho,
+                                room: sendWhere
+                            })
+                        }}>Submit</Button>
+                    </div>
+
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingBottom: '1em',
+                            justifyContent: 'space-between'
+                        }}
+                    >
+                        <div>
+                        Throw{' '}
+                        <BPSelect
+                            name="throwWho"
+                            value={throwWho}
+                            onChange={o => {
+                                this.setState({
+                                    throwWho: o.value
+                                });
+                            }}
+                        >{this.props.players
+                                .filter(p => p.alive)
+                                .map((p, i) => {
+                                    return (<option value={p.id}>
+                                        {p.name}
+                                    </option>);
+                                })}</BPSelect>{' '}
+                        in Space
                         </div>
-                    </Card>
+
+                        <Button onClick={() => {
+                            this.props.submit({
+                                type: 'THROW',
+                                player: throwWho,
+                            })
+                        }}>Submit</Button>
+                    </div>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingBottom: '1em',
+                            justifyContent: 'space-between'
+                        }}
+                        className="pt-form-group pt-inline"
+                    >
+                        <div>
+                        Fix{' '}
+                        <BPSelect
+                            name="fixWhat"
+                            value={fixWhat}
+                            onChange={o => {
+                                this.setState({
+                                    fixWhat: o.value
+                                });
+                            }}
+
+                        >{this.props.problems.map((p, i) => {
+                                return (<option value={i}>{p.name}</option>)
+                            })}</BPSelect>
+                        </div>
+
+                            <Button onClick={() => {
+                            this.props.submit({
+                                type: 'FIX',
+                                problemId: fixWhat,
+                            })
+                        }}>Submit</Button>
+                    </div>
                 </div>
-            </Modal>
+            </Dialog>
         );
     }
 }
