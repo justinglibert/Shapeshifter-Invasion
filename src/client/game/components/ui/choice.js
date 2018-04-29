@@ -8,6 +8,18 @@ import Modal from 'react-responsive-modal/lib/css';
 import 'react-select/dist/react-select.css';
 import { Button } from "@blueprintjs/core";
 
+const BPSelect = props => {
+    let { children, ...rest} = props;
+
+    return (
+        <div className="pt-select">
+            <select {...rest}>
+                { children }
+            </select>
+        </div>
+    )
+}
+
 class Choice extends React.Component {
     constructor(props) {
         super(props);
@@ -37,7 +49,7 @@ class Choice extends React.Component {
                             }}
                         >
                             Send{' '}
-                            <Select
+                            <BPSelect
                                 style={{ minWidth: '200px' }}
                                 name="sendWho"
                                 value={sendWho}
@@ -46,17 +58,19 @@ class Choice extends React.Component {
                                         sendWho: o.value
                                     });
                                 }}
-                                options={this.props.players
+                            >
+                                {
+                                    this.props.players
                                     .filter(p => p.alive)
                                     .map((p, i) => {
-                                        return {
-                                            value: p.id,
-                                            label: p.name
-                                        };
-                                    })}
-                            />{' '}
+                                        return (<option value={p.id}>
+                                            {p.name}
+                                        </option>);
+                                    })
+                                }
+                            </BPSelect>{' '}
                             to{' '}
-                            <Select
+                            <BPSelect
                                 name="sendWhere"
                                 style={{ minWidth: '200px' }}
                                 value={sendWhere}
@@ -65,13 +79,12 @@ class Choice extends React.Component {
                                         sendWhere: o.value
                                     });
                                 }}
-                                options={this.props.rooms.map((r, i) => {
-                                    return {
-                                        value: i,
-                                        label: r.name
-                                    };
+                            >{this.props.rooms.map((r, i) => {
+                                    return (<option value={i}>
+                                        {r.name}
+                                    </option>);
                                 })}
-                            />
+                            </BPSelect>
                             <Button disabled={(sendWho === undefined && sendWhere === undefined)} onClick={() => {
                                 this.props.submit({
                                     type: 'SEND',
@@ -91,7 +104,7 @@ class Choice extends React.Component {
                             }}
                         >
                             Throw{' '}
-                            <Select
+                            <BPSelect
                                 style={{ minWidth: '200px' }}
                                 name="throwWho"
                                 value={throwWho}
@@ -100,15 +113,13 @@ class Choice extends React.Component {
                                         throwWho: o.value
                                     });
                                 }}
-                                options={this.props.players
+                            >{this.props.players
                                     .filter(p => p.alive)
                                     .map((p, i) => {
-                                        return {
-                                            value: p.id,
-                                            label: p.name
-                                        };
-                                    })}
-                            />{' '}
+                                        return (<option value={p.id}>
+                                            {p.name}
+                                        </option>);
+                                    })}</BPSelect>{' '}
                             in Space
                             <Button disabled={throwWho === undefined} onClick={() => {
                                 this.props.submit({
@@ -129,7 +140,7 @@ class Choice extends React.Component {
                             }}
                         >
                             Fix{' '}
-                            <Select
+                            <BPSelect
                                 name="fixWhat"
                                 style={{ minWidth: '200px' }}
                                 value={fixWhat}
@@ -138,13 +149,10 @@ class Choice extends React.Component {
                                         fixWhat: o.value
                                     });
                                 }}
-                                options={this.props.problems.map((p, i) => {
-                                    return {
-                                        value: i,
-                                        label: p.name
-                                    };
-                                })}
-                            />
+
+                            >{this.props.problems.map((p, i) => {
+                                    return (<option value={i}>{p.name}</option>)
+                                })}</BPSelect>
                              <Button disabled={(fixWhat) === undefined} onClick={() => {
                                 this.props.submit({
                                     type: 'FIX',
