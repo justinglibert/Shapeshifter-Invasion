@@ -22,6 +22,7 @@ import Propositions from './ui/propositions';
 import Choice from './ui/choice';
 import ChooseItems from './ui/chooseItems';
 import AlienInfo from './ui/alienInfo';
+import Mappo from './ui/mappo';
 import Tutorial from './ui/tutorial';
 
 
@@ -115,7 +116,7 @@ class Board extends React.Component {
         }
         return (
             <div>
-                {!players[this.props.playerID].hasDoneTutorial && <Tutorial completeTutorial={() => this.props.moves.completeTutorial()} amIPlaying={amIPlaying}/>}
+                {!players[this.props.playerID].hasDoneTutorial && <Tutorial isAlien={players[this.props.playerID].aliens} completeTutorial={() => this.props.moves.completeTutorial()} amIPlaying={amIPlaying}/>}
                 <Toaster ref={ref => this.toaster = ref}></Toaster>
                 <div style={{ marginBottom: '1em' }}>
                     {disconnected}
@@ -164,7 +165,7 @@ class Board extends React.Component {
                     >
                         <Items items={this.props.G.items} />
                         <Problems problems={this.props.G.problems} />
-                        {players[this.props.playerID].aliens && <AlienInfo rooms={rooms}/>}
+                        {players[this.props.playerID].aliens && <Mappo rooms={rooms}/>}
                     </div>
                 </div>
             </div>

@@ -48,8 +48,8 @@ const announce = (G, message, intent) => {
 
 const generateNewGameEnvironment = () => {
     console.log("Generating the env")
-    const numberOfProblems = 2
-    const numberOfDangerousRoom = 2
+    const numberOfProblems = 4
+    const numberOfDangerousRoom = 4
     let problems = _.sampleSize(ProblemData, numberOfProblems)
     console.log(problems)
     problems = problems.map((p) => {
@@ -147,7 +147,7 @@ while(nmbrAliens < numberOfAliens){
     }
 }
 const TurnExample = Game({
-    name: 'turnorder',
+    name: 'turnorder', 
     setup: () => ({
         shouldHarmShip: false,
         announcement: {}, 

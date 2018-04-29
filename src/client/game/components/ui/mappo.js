@@ -6,7 +6,9 @@ class Mappo extends React.Component {
         return (
             <div>
                 <Card>
+                <h4 style={{marginBottom: '10px'}}>Ḁ̕L͔͇͕͞I̩͖̟̞̘ͅE̡̖̫̜̰N K̹̦͓͕̕N͓̩͚̤̘̬͕O̗͖̼̯̕ͅW̧͈͇͈̜ͅL̥̝͞E̜͖̭͍̲͔ͅDGE̪͈̠͕̩̞̪</h4>
                     <table className="pt-html-table .striped">
+                    
                         <thead>
                             <tr>
                                 <th>Room</th>
@@ -18,8 +20,8 @@ class Mappo extends React.Component {
                             {this.props.rooms.map( (room) => (
                                 <tr>
                                     <td> {room.name} </td>
-                                    <td> {room.item} </td>
-                                    <td> {room.danger} </td>
+                                    <td> {room.items[0] && room.items[0].name} </td>
+                                    <td> {room.deadly ? 'YES' : 'NO'} </td>
                                 </tr>
                             ))}
                         </tbody>
