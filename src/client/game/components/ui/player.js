@@ -16,7 +16,7 @@ class Player extends React.Component {
       <Card style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', marginBottom: '1em'}} className={this.props.isDoingItsTurn && "dropshadow"}>
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <Icon icon="user" color={colours[this.props.player.id % 30]} />
-          <p style={{textDecoration: 'line-through', margin:'10px'}}> {this.props.player.name} </p>
+          <p style={{margin:'10px'}}> {this.props.player.name} </p>
         </div>
         { this.renderMe() }
       </Card>
