@@ -104,18 +104,22 @@ const TurnExample = Game({
         ],
         players: [
             {
+                id: 0,
                 name: 'Player 1',
                 alive: true
             },
             {
+                id: 1,
                 name: 'Player 2',
                 alive: true
             },
             {
+                id: 2,
                 name: 'Player 3',
                 alive: true
             },
             {
+                id: 3,
                 name: 'Player 4',
                 alive: true
             },
@@ -272,6 +276,7 @@ const TurnExample = Game({
                         case 'THROW': 
                             let deadPlayer = mostVotedProposal.proposal.player;
                             newG.players[deadPlayer].alive = false;
+                            newG.announcement = `${newG.players[deadPlayer].name} has been thrown in Space`
                             ctx.events.endPhase('propose');
                             return newG;
                         case 'FIX':

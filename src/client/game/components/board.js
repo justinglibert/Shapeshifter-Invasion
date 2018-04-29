@@ -23,6 +23,8 @@ import Choice from './ui/choice';
 import ChooseItems from './ui/chooseItems';
 import AlienInfo from './ui/alienInfo';
 
+import { Toast, Toaster } from "@blueprintjs/core";
+
 class Board extends React.Component {
     static propTypes = {
         G: PropTypes.any.isRequired,
@@ -42,6 +44,27 @@ class Board extends React.Component {
         selected: ''
     };
 
+    UNSAFE_componentWillReceiveProps(nextProps){
+      if(this.props.G.announcement !== nextProps.G.announcement){
+        alert("announcement")
+        this.announcement = (
+          <Toaster><Toast message={nextProps.G.announcement}/></Toaster>
+        )
+      }
+    }
+
+    makeSentence(proposal, players, room, problems) {
+      switch(proposal.type) {
+        case 'SEND':
+          return `Send ${players[proposal.player].name} to ${rooms[proposal.room].name}`
+        case 'THROW':
+        return `Throw ${players[proposal.player].name} in Space`
+        case 'FIX':
+          return `Fix ${problems[proposal.problemId].name}`
+        default:
+          return 'Error'
+      }
+    }
     render() {
         let propositions;
         let players = this.props.G.players
@@ -57,7 +80,7 @@ class Board extends React.Component {
         propositions = this.props.G.proposals.length > 0 && this.props.G.proposals.map((p) => {
           return {
             player: players[p.player].name,
-            description: JSON.stringify(p.proposal),
+            description: this.makeSentence(p.proposal, players, rooms, problems),
             percentage: Math.ceil(p.voters.length / totalVote * 100)
           }
         })
@@ -68,6 +91,7 @@ class Board extends React.Component {
         }
         return (
             <div>
+                {this.annoucement}
                 {disconnected}
                 <p>Current player: {this.props.playerID}</p>
                 {amIPlaying ? "It's your turn" : "Please wait for your turn..."}

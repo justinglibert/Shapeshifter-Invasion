@@ -49,7 +49,7 @@ class Choice extends React.Component {
                                     .filter(p => p.alive)
                                     .map((p, i) => {
                                         return {
-                                            value: i,
+                                            value: p.id,
                                             label: p.name
                                         };
                                     })}
@@ -103,7 +103,7 @@ class Choice extends React.Component {
                                     .filter(p => p.alive)
                                     .map((p, i) => {
                                         return {
-                                            value: i,
+                                            value: p.id,
                                             label: p.name
                                         };
                                     })}
