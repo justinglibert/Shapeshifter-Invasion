@@ -48,7 +48,7 @@ const announce = (G, message, intent) => {
 
 const generateNewGameEnvironment = () => {
     console.log("Generating the env")
-    const numberOfProblems = 2
+    const numberOfProblems = 3
     const numberOfDangerousRoom = 4
     const numberOfDrones = 3
     const numberOfExtraRooms = 2;
@@ -104,7 +104,7 @@ while(nmbrDrones < numberOfDrones){
         spaceship: {
             resources: StatusData
         },
-        rooms: rooms
+        rooms: _.shuffle(rooms)
     }
 
 }

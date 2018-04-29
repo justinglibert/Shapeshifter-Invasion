@@ -6,7 +6,7 @@ import {ItemData} from '../../texts.js'
 class Problem extends React.Component {
     render() {
         return (
-            <Callout intent="danger" title={this.props.problem.name}>
+            <Callout intent="danger" style={{marginBottom: '0.5em'}} title={this.props.problem.name}>
                 <ul style={{
                     listStyle: 'none',
                     paddingLeft: 0,

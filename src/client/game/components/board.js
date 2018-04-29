@@ -27,7 +27,7 @@ import Tutorial from './ui/tutorial';
 import Win from './ui/win';
 
 
-import { Toast, Toaster, Button } from "@blueprintjs/core";
+import { Toast, Toaster, Button, Tab, Tabs } from "@blueprintjs/core";
 
 class Board extends React.Component {
     static propTypes = {
@@ -168,9 +168,13 @@ class Board extends React.Component {
                             width: '20%'
                         }}
                     >
-                        <Items items={this.props.G.items} />
-                        <Problems problems={this.props.G.problems} />
-                        {players[this.props.playerID].aliens && <Mappo rooms={rooms}/>}
+                    <Tabs id="TabsExample" defaultSelectedTabId="it">
+    <Tab id="it" title="Items & Problems" panel={<div>
+        <Items items={this.props.G.items} />
+        <Problems problems={this.props.G.problems} />
+    </div>} />
+    {players[this.props.playerID].aliens && (<Tab id="mappo" title="Alien" panel={<Mappo rooms={rooms}/>}/>)}
+</Tabs>
                     </div>
                 </div>
             </div>
