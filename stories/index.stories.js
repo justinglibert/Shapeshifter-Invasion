@@ -19,6 +19,7 @@ import Propositions from '../src/client/game/components/ui/propositions';
 import Choice from '../src/client/game/components/ui/choice';
 import ItemOption from '../src/client/game/components/ui/itemOption';
 import ItemOptions from '../src/client/game/components/ui/itemOptions';
+import Mappo from '../src/client/game/components/ui/mappo';
 
 import '../src/client/index.scss';
 
@@ -173,3 +174,11 @@ storiesOf('Propositions', module).add('Propositions', () =>
 // storiesOf('Choice', module).add('Choice', () =>
 //   <Choice choice = {choice1}/>
 // )
+
+const room1 = {name: 'Engine Room', item: 'Big Dildo', danger: '-'};
+const room2 = {name: 'Garden', item: 'Repair Kit', danger: 'gravity trap'};
+const rooms = [room1, room2];
+
+storiesOf('Mappo', module).add('of 2 rooms', ()=>
+  <Mappo rooms={rooms}/>
+);
