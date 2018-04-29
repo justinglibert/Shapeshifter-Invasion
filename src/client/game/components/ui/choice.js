@@ -22,6 +22,27 @@ const BPSelect = props => {
     )
 }
 
+
+
+const checkSimilitude = (type, proposals, state) =>  {
+    let {sendWho, sendWhere, throwWho, fixWhat} = state
+    switch(type){
+        case 'SEND':
+            return proposals.filter(p => p.proposal.type === 'SEND').some((p) => {
+                return p.proposal.player == sendWho && p.proposal.room == sendWhere
+            })
+        case 'THROW':
+            return proposals.filter(p => p.proposal.type === 'THROW').some((p) => {
+                return p.proposal.player == throwWho
+            })
+        case 'FIX':
+            return proposals.filter(p => p.proposal.type === 'FIX').some((p) => {
+              return p.proposal.problemId == fixWhat
+            })
+        default:
+            return false
+    }
+}
 class Choice extends React.Component {
     constructor(props) {
         super(props);
@@ -84,7 +105,7 @@ class Choice extends React.Component {
                         </BPSelect>
                         </div>
 
-                        <Button onClick={() => {
+                        <Button disabled={checkSimilitude('SEND', this.props.proposals, this.state)} onClick={() => {
                             console.log(this.state)
                             this.props.submit({
                                 type: 'SEND',
@@ -123,7 +144,7 @@ class Choice extends React.Component {
                         in Space
                         </div>
 
-                        <Button onClick={() => {
+                        <Button disabled={checkSimilitude('THROW', this.props.proposals, this.state)} onClick={() => {
                             this.props.submit({
                                 type: 'THROW',
                                 player: throwWho,
@@ -156,7 +177,7 @@ class Choice extends React.Component {
                             })}</BPSelect>
                         </div>
 
-                            <Button onClick={() => {
+                            <Button disabled={checkSimilitude('FIX', this.props.proposals, this.state)} onClick={() => {
                             this.props.submit({
                                 type: 'FIX',
                                 problemId: fixWhat,

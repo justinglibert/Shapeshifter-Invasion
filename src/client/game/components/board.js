@@ -124,7 +124,7 @@ class Board extends React.Component {
 
                 {amIPlaying && this.props.ctx.phase === 'propose' && players[this.props.playerID].hasDoneTutorial ? <Choice submit={(p) => {
                   this.props.moves.propose(p)
-                }} players={players} rooms={rooms} problems={problems}/> : undefined}
+                }} players={players} rooms={rooms} problems={problems} proposals={this.props.G.proposals}/> : undefined}
                 {amIPlaying && this.props.ctx.phase === 'resolve' && this.props.G.roomBeingVisited ? <ChooseItems submit={(i) => {
                   this.props.moves.pickUpItems(i)
                   //console.log(i)
