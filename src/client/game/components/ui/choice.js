@@ -9,11 +9,13 @@ import 'react-select/dist/react-select.css';
 import { Button, Dialog } from "@blueprintjs/core";
 
 const BPSelect = props => {
-    let { children, ...rest} = props;
+    let { children, onChange, ...rest} = props;
 
     return (
         <div className="pt-select">
-            <select {...rest}>
+            <select {...rest}  onChange={(e) => {
+                onChange(e.target)
+            }}>
                 { children }
             </select>
         </div>
@@ -24,10 +26,10 @@ class Choice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sendWho: undefined,
-            sendWhere: undefined,
-            throwWho: undefined,
-            fixWhat: undefined,
+            sendWho: props.players[0].id,
+            sendWhere: 0,
+            throwWho: props.players[0].id,
+            fixWhat: props.problems.findIndex(p => p.active),
         };
     }
     render() {
@@ -83,6 +85,7 @@ class Choice extends React.Component {
                         </div>
 
                         <Button onClick={() => {
+                            console.log(this.state)
                             this.props.submit({
                                 type: 'SEND',
                                 player: sendWho,
@@ -148,7 +151,7 @@ class Choice extends React.Component {
                                 });
                             }}
 
-                        >{this.props.problems.map((p, i) => {
+                        >{this.props.problems.filter((p) => p.active).map((p, i) => {
                                 return (<option value={i}>{p.name}</option>)
                             })}</BPSelect>
                         </div>

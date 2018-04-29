@@ -40,7 +40,7 @@ const announce = (G, message, intent) => {
     G.announcement.message = message
     G.announcement.intent = intent
     return  G
-}
+}  
 
 const inflictDamageToSpaceship = (spaceship, problems)=> {
     console.log("Damaging the spaceship")
@@ -52,13 +52,13 @@ const inflictDamageToSpaceship = (spaceship, problems)=> {
         })
         newResources[i].amount = newResources[i].amount - malus
     })
-    return newResources
+    return newResources 
 }
 const TurnExample = Game({
     name: 'turnorder',
     setup: () => ({
         shouldHarmShip: false,
-        announcement: {},
+        announcement: {}, 
         spaceship: {
             resources: [
                 {

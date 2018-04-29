@@ -71,6 +71,7 @@ class Board extends React.Component {
     }
 
     makeSentence(proposal, players, rooms, problems) {
+        console.log(proposal)
       switch(proposal.type) {
         case 'SEND':
           return `Send ${players[proposal.player].name} to ${rooms[proposal.room].name}`
@@ -109,7 +110,7 @@ class Board extends React.Component {
         }
         return (
             <div>
-                <Toaster ref={ref => this.toaster = ref}>
+                <Toaster ref={ref => this.toaster = ref}></Toaster>
                 <div style={{ marginBottom: '1em' }}>
                 {disconnected}
                 <Button icon="ninja" large style={{margin: "0 .5rem"}}>
