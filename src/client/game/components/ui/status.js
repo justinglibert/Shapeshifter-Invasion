@@ -11,7 +11,7 @@ class Status extends React.Component {
                     {this.props.resource.name}:
                 </span>
 
-                    <ProgressBar animate={false} stripes={false} value={(this.props.resource.amount)/ 10}/>
+                    <ProgressBar animate={false} stripes={false} value={(this.props.resource.value)/ 10}/>
                 
                 <span style={{margin: '10px'}}>
                     -{this.props.decrease} /turn
