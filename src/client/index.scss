@@ -18,3 +18,12 @@ body {
   .medium-bar {
     max-width: 220px;
   }
+
+  .dropshadow {
+    border-style: solid;
+    border-width: 4px;
+    box-shadow: none;
+    border-color: rgba(108, 174, 221, 1) !important;
+    z-index: 30;
+  }
+
