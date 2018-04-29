@@ -9,12 +9,21 @@ class Tutorial extends React.Component {
 
     render() {
         return (
-            <Dialog isOpen={true}  isCloseButtonShown={false} title="Message From DELTA">
+            <Dialog isOpen={true}  style={{minWidth: '1000px'}}isCloseButtonShown={false} title="Message From DELTA">
                 <div className="pt-dialog-body" style={{display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent: 'space-between'}}>
                     <Icon icon={"delta"} iconSize={100} intent={Intent.PRIMARY} />
-                    <p style={{marginTop: '20px'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada urna vulputate enim vulputate egestas. Nullam nunc augue, dictum vitae vestibulum quis, vulputate at sapien. Vivamus dignissim nulla non massa commodo condimentum. In hac habitasse platea dictumst. Sed vehicula congue leo. Nulla id laoreet erat. Aliquam ac vehicula turpis, sed eleifend nulla. Vivamus interdum ante sit amet purus mattis, at iaculis eros luctus. Suspendisse placerat leo ut nulla cursus pulvinar eget quis magna.
+                    <h3 style={{marginTop: '20px'}}>I am glad you are finally awake. I am your on-board AI -- Delta. 2 hours ago, our vessel was breached by Xhwathu Shapeshifters, who have now disguised themselves as humans.</h3>
 
-Suspendisse semper felis eget neque volutpat vehicula. Donec diam felis, mollis non feugiat at, congue ac nisl. Aliquam vitae nibh blandit, sagittis nunc vitae, cursus odio. Integer ut eros varius, dapibus nibh eget, tempor erat. Cras nec dolor turpis. Fusce ut vehicula turpis, nec pellentesque lectus. Pellentesque commodo scelerisque dui, ac molestie mauris consectetur sit amet. In dui mi, scelerisque in tincidunt nec, convallis in augue. Pellentesque molestie velit vel vestibulum ultrices. Phasellus varius euismod arcu, ac cursus velit. Etiam at ante ac magna facilisis tincidunt. Phasellus tempus, tortor sed dignissim porttitor, est est cursus sapien, ullamcorper facilisis nisi ex ut lectus.</p>
+<h3>During the breach, our vessel was damaged. Moreover, there are now various dangers and traps scattered across the ship.</h3>
+
+<h3>During the breach, our vessel was damaged. Moreover, there are now various dangers and traps scattered across the ship.
+The Xhwathu Shapeshifters are outnumbered by us, but their nine senses allow them to know the exact locations for dangers and traps. They won\'t directly attack you, but they will lead you towards these dangers</h3>
+
+<h3>During the breach, our vessel was damaged. Moreover, there are now various dangers and traps scattered across the ship.
+Collaborate with each other, discuss to find out the Shapeshifters, find tools to fix the spaceship, and survive until we land on Earth.</h3>
+
+<h3>During the breach, our vessel was damaged. Moreover, there are now various dangers and traps scattered across the ship.</h3>
+<h3>Stay safe.</h3>
                 </div>
                 <div className="pt-dialog-footer">
                 {this.props.amIPlaying ?  <Button onClick={() => {

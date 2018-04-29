@@ -40,7 +40,7 @@ const announce = (G, message, intent) => {
     G.announcement.message = message
     G.announcement.intent = intent
     G.announcement.icon = 'delta'
-    return  G
+    return  G 
 }  
 
 const inflictDamageToSpaceship = (spaceship, problems)=> {
