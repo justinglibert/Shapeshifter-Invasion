@@ -1,4 +1,4 @@
  - Annoucement V
  - Better UI V
- - Alien/Human
- - 
+ - Alien/Human V
+ - Custom message Alien

@@ -8,9 +8,13 @@ class ShipStatus extends React.Component {
             <div>
                 <Card>
                     <p>Ship Status</p>
-                    {this.props.ship.resources.map((resource) => (
-                        <Status resource={resource} decrease={1}/>
-                    ))}
+                    {this.props.ship.resources.map((resource) => {
+                        let relevantProblems = this.props.problems.filter(p => p.affected === resource.id)
+                        console.log(relevantProblems)
+                        let sum = relevantProblems.reduce(((acc, cur) => acc + cur.decreaseRate),0)
+                        console.log(sum)
+                        return (<Status resource={resource} decrease={sum}/>)}
+                    )}
                 </Card>
             </div>
         );

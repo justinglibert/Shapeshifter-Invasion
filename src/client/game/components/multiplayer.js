@@ -17,7 +17,7 @@ const App = Client({
   game: Game,
   board: SpaceBoard,
   multiplayer: true,
-  debug: true,
+  debug: false,
   numPlayers: 4
 });
 

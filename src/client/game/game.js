@@ -59,7 +59,7 @@ const generateNewGameEnvironment = () => {
         }
     })
     console.log(problems)
-    let solutions = problems.map(p => p.solution)
+    let solutions = problems.map(p => p.solutions)
     solutions = _.flatten(solutions)
     console.log(solutions)
     let items = solutions.map(s => ItemData.find(i => i.id === s))
@@ -102,41 +102,59 @@ const inflictDamageToSpaceship = (spaceship, problems)=> {
     })
     return newResources 
 }
+
+const data = generateNewGameEnvironment()
+const numberOfAliens = 1;
+let players = [
+    {
+        id: 0,
+        name: 'Player 1',
+        alive: true,
+        hasDoneTutorial: false
+    },
+    {
+        id: 1,
+        name: 'Player 2',
+        alive: true,
+        hasDoneTutorial: false
+    },
+    {
+        id: 2,
+        name: 'Player 3',
+        alive: true,
+        hasDoneTutorial: false
+    },
+    {
+        id: 3,
+        name: 'Player 4',
+        alive: true,
+        hasDoneTutorial: false
+    },
+]
+
+let nmbrAliens = 0
+while(nmbrAliens < numberOfAliens){
+    console.log("loop")
+    let id= Math.floor(Math.random()*(players.length - 1))
+    if(!players[id].aliens) {
+        console.log("increment")
+        players[id].aliens = true
+        nmbrAliens++
+        continue
+    } else {
+        continue
+    }
+}
 const TurnExample = Game({
     name: 'turnorder',
     setup: () => ({
         shouldHarmShip: false,
         announcement: {}, 
-        ...generateNewGameEnvironment(),
+        ...data,
         roomBeingVisited: undefined,
         proposals: [],
         items: [],
-        players: [
-            {
-                id: 0,
-                name: 'Player 1',
-                alive: true,
-                hasDoneTutorial: false
-            },
-            {
-                id: 1,
-                name: 'Player 2',
-                alive: true,
-                hasDoneTutorial: false
-            },
-            {
-                id: 2,
-                name: 'Player 3',
-                alive: true,
-                hasDoneTutorial: false
-            },
-            {
-                id: 3,
-                name: 'Player 4',
-                alive: true,
-                hasDoneTutorial: false
-            },
-        ]
+        players: [...players]
     }),
 
     moves: {
@@ -220,6 +238,7 @@ const TurnExample = Game({
                     if(newG.shouldHarmShip){
                         newG.spaceship.resources = inflictDamageToSpaceship(newG.spaceship, newG.problems)
                         newG.shouldHarmShip = false
+                        newG = announce(newG, `The spaceship has been damaged`, Intent.DANGER)
                         console.log("Infected damage: " + JSON.stringify(newG.spaceship.resources))
                     }
                     return newG
@@ -256,7 +275,7 @@ const TurnExample = Game({
                     });
                     t.length != 0 ? console.log('Ending Turn Vote') : undefined;
                     return t.length != 0;
-                },
+                }, 
                 endPhaseIf: (G, ctx) => {
                     let numberOfPlayersWhoVoted = 0;
                     G.proposals.forEach(p => {
@@ -321,7 +340,10 @@ const TurnExample = Game({
                             });
                             console.log('CanFix: ' + canFix);
                             if (canFix) {
+                                newG = announce(newG, `${newG.problems[problemId].name} has been fixed!`, Intent.SUCCESS)
                                 newG.problems[problemId].active = false;
+                            } else {
+                                newG = announce(newG, `You didn't succeed to fix ${newG.problems[problemId].name}`, Intent.WARNING)
                             }
                             ctx.events.endPhase('propose');
                             return newG;

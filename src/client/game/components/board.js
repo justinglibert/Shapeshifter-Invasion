@@ -142,7 +142,7 @@ class Board extends React.Component {
                         }}
                     >
                         <Players players={this.props.G.players} currentPlayer={this.props.ctx.currentPlayer} me={this.props.playerID} />
-                        <ShipStatus ship={this.props.G.spaceship} />
+                        <ShipStatus ship={this.props.G.spaceship} problems={this.props.G.problems}/>
                     </div>
                     <div
                         style={{
@@ -162,7 +162,7 @@ class Board extends React.Component {
                     >
                         <Items items={this.props.G.items} />
                         <Problems problems={this.props.G.problems} />
-                        <AlienInfo rooms={rooms}/>
+                        {players[this.props.playerID].aliens && <AlienInfo rooms={rooms}/>}
                     </div>
                 </div>
             </div>
