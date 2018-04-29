@@ -11,9 +11,7 @@ class Problem extends React.Component {
                         <i>Description:</i> {this.props.problem.description}
                     </li>
                     <li>
-                        <i>Solution:</i> {this.props.problem.solutions.map((s)=>{
-                            return s
-                        })}
+                        <i>Solution:</i> {this.props.problem.solution}
                     </li>
                     <li>
                         <i>Ressource affected:</i> {this.props.problem.affected}
