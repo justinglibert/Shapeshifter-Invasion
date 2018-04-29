@@ -114,7 +114,7 @@ class Board extends React.Component {
                 <div style={{ marginBottom: '1em' }}>
                 {disconnected}
                 <Button icon="ninja" large style={{margin: "0 .5rem"}}>
-                    Current player: {this.props.playerID}
+                    You are player {this.props.playerID}
                 </Button>
                 {amIPlaying ? "It's your turn" : "Please wait for your turn..."}
                 </div>
