@@ -26,10 +26,9 @@ class Proposition extends React.Component {
           </div>
           : undefined}
           {this.props.canVote && (
-                            <button onClick={()=>{
-                              this.props.vote(this.props.id)
-                            }}>Vote!</button>
-                        )}
+            <Button onClick={()=>{
+              this.props.vote(this.props.id)
+            }} text="Vote!" icon="plus" />)}
         </Card>
     );
   }

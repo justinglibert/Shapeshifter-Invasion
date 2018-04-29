@@ -20,7 +20,7 @@ class Mappo extends React.Component {
                             {this.props.rooms.map( (room) => (
                                 <tr>
                                     <td> {room.name} </td>
-                                    <td> {room.items[0] && room.items[0].name} </td>
+                                    <td><div style={{display: 'flex', flexDirection: 'column'}}> {room.items && room.items.map(i=> (<p>{i.name}</p>))} </div></td>
                                     <td> {room.deadly ? 'YES' : 'NO'} </td>
                                 </tr>
                             ))}

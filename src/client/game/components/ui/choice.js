@@ -51,9 +51,9 @@ class Choice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sendWho: props.players[0].id,
+            sendWho: props.players.filter(p => p.alive)[0].id,
             sendWhere: 0,
-            throwWho: props.players[0].id,
+            throwWho: props.players.filter(p => p.alive)[0].id,
             fixWhat: props.problems.findIndex(p => p.active),
             probeWhere: 0
         };

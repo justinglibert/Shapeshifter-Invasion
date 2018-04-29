@@ -9,7 +9,7 @@ class Problems extends React.Component {
                 <Card>
                     <p>Problems</p>
                     <div>
-                        {this.props.problems.map( (problem) => (
+                        {this.props.problems.filter(p => p.active).map( (problem) => (
                             <Problem problem = {problem}/>
                         ))}
                     </div>

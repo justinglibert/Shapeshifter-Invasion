@@ -1,18 +1,13 @@
 import { Button, Dialog, Icon, Intent , TextArea} from "@blueprintjs/core";
 import React from 'react';
-class Tutorial extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: 'Jeff Who'
-        }
-    }
+class Win extends React.Component {
 
     renderText() {
         if(this.props.isAlien){
             return (
                 <div className="pt-dialog-body" style={{display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent: 'space-between'}}>
                 <Icon icon={"predictive-analysis"} iconSize={100} intent={Intent.WARNING} />
+                <h3>We won</h3>
                     <h3>We have successfully infiltrated a ... human ... spaceship. Our Shapeshifting was successful and we now appear ... exactly ...like them.</h3>
 
 <h3>The ... humans ... do not know of the danger and the traps on the ship. But we know, and we will lead them towards them...</h3>
@@ -27,6 +22,7 @@ class Tutorial extends React.Component {
                 <div className="pt-dialog-body" style={{display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent: 'space-between'}}>
                 <Icon icon={"delta"} iconSize={100} intent={Intent.PRIMARY} />
                 <h3 style={{marginTop: '20px'}}>I am glad you are finally awake. I am your on-board AI -- Delta. 2 hours ago, our vessel was breached by Xhwathu Shapeshifters, who have now disguised themselves as humans.</h3>
+                <h3>We won</h3>
 
 
 <h3>During the breach, our vessel was damaged. Moreover, there are now various dangers and traps scattered across the ship.
@@ -42,23 +38,11 @@ The Xhwathu Shapeshifters are outnumbered by us, but their nine senses allow the
         return (
             <Dialog isOpen={true}  style={{minWidth: '600px'}}isCloseButtonShown={false} title={!this.props.isAlien ? "Message From DELTA" : "Message from the Q̻̖̘͚͙U͈̰̟̥͓͎EḚ̢̙͉N̶͉̦"}>
                 {this.renderText()}
-                <div className="pt-dialog-footer" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '30px'}}>
-                    <h3 style={{marginRight: '20px'}}>How should I call you?</h3>
-                    <input className="pt-input pt-intent-primary" type="text" value={this.state.name} onChange={(e) => this.setState({name: e.target.value})} placeholder="Jeff Who" dir="auto" />
-                </div>
-                {this.props.amIPlaying ?  <Button onClick={() => {
-                        this.props.completeTutorial(this.state.name)
-                    }}>Understood</Button> : <Button disabled onClick={() => {
-                        this.props.completeTutorial(this.state.name)
-                    }}>Waiting for your turn...</Button>}
-                  
-                </div>
             </Dialog>
         );
     }
 }
 
-export default Tutorial;
+export default Win;
 
 

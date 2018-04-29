@@ -26,6 +26,9 @@ export const Rooms = [
         "Bridge",
         "Intelligence Room",
         "Garden",
+        "Storage Room",
+        "Swimming Pool",
+        "Quantum Lab"
 ]
     
 export const StatusData = [

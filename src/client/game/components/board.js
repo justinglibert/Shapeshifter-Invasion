@@ -24,6 +24,7 @@ import ChooseItems from './ui/chooseItems';
 import AlienInfo from './ui/alienInfo';
 import Mappo from './ui/mappo';
 import Tutorial from './ui/tutorial';
+import Win from './ui/win';
 
 
 import { Toast, Toaster, Button } from "@blueprintjs/core";
@@ -114,9 +115,13 @@ class Board extends React.Component {
         if (this.props.isMultiplayer && !this.props.isConnected) {
             disconnected = <Button large intent="danger" icon='issue' disabled>Disconnected!</Button>;
         }
+        console.log("Gameover", this.props.ctx.gameover)
         return (
             <div>
-                {!players[this.props.playerID].hasDoneTutorial && <Tutorial isAlien={players[this.props.playerID].aliens} completeTutorial={() => this.props.moves.completeTutorial()} amIPlaying={amIPlaying}/>}
+                {(this.props.ctx.gameover !== undefined) ?
+                    <Win isAlien={this.props.ctx.gameover === 'aliens'} />: undefined
+                }
+                {!players[this.props.playerID].hasDoneTutorial && <Tutorial isAlien={players[this.props.playerID].aliens} completeTutorial={(name) => this.props.moves.completeTutorial(name)} amIPlaying={amIPlaying}/>}
                 <Toaster ref={ref => this.toaster = ref}></Toaster>
                 <div style={{ marginBottom: '1em' }}>
                     {disconnected}
@@ -145,7 +150,7 @@ class Board extends React.Component {
                         }}
                     >
                         <Players players={this.props.G.players} G={this.props.G} currentPlayer={this.props.ctx.currentPlayer} me={this.props.playerID} />
-                        <ShipStatus ship={this.props.G.spaceship} problems={this.props.G.problems} />
+                        <ShipStatus ship={this.props.G.spaceship} problems={this.props.G.problems.filter(p => p.active)} />
                     </div>
                     <div
                         style={{

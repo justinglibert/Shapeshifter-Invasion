@@ -48,8 +48,10 @@ const announce = (G, message, intent) => {
 
 const generateNewGameEnvironment = () => {
     console.log("Generating the env")
-    const numberOfProblems = 4
+    const numberOfProblems = 2
     const numberOfDangerousRoom = 4
+    const numberOfDrones = 3
+    const numberOfExtraRooms = 2;
     let problems = _.sampleSize(ProblemData, numberOfProblems)
     console.log(problems)
     problems = problems.map((p) => {
@@ -64,7 +66,7 @@ const generateNewGameEnvironment = () => {
     console.log(solutions)
     let items = solutions.map(s => ItemData.find(i => i.id === s))
     console.log(items)
-    let roomsUnpopulated = _.sampleSize(Rooms, items.length + numberOfDangerousRoom)
+    let roomsUnpopulated = _.sampleSize(Rooms, items.length + numberOfDangerousRoom + numberOfExtraRooms)
     console.log(roomsUnpopulated)
     //Populate rooms
     let rooms = items.map((item, i) => {return {
@@ -76,10 +78,27 @@ const generateNewGameEnvironment = () => {
         rooms.push({
             name: roomsUnpopulated[i],
             items: [],
-            deadly: true
+            deadly: rooms.filter(r => r.deadly).length < numberOfDangerousRoom
         })
         i++
     }
+
+    let nmbrDrones = 0
+while(nmbrDrones < numberOfDrones){
+    let id= Math.floor(Math.random()*(rooms.length - 1))
+    if(!rooms[id].deadly) {
+        rooms[id].items.push({
+            name: 'RECON Drone X23',
+            id: 'drone'
+        })
+        nmbrDrones++
+        continue
+    } else {
+        continue
+    }
+}
+
+
     return {
         problems: problems,
         spaceship: {
@@ -109,25 +128,25 @@ const numberOfAliens = 1;
 let players = [
     {
         id: 0,
-        name: 'Player 1',
+        name: '??? (1)',
         alive: true,
         hasDoneTutorial: false
     },
     {
         id: 1,
-        name: 'Player 2',
+        name: '??? (2)',
         alive: true,
         hasDoneTutorial: false
     },
     {
         id: 2,
-        name: 'Player 3',
+        name: '??? (3)',
         alive: true,
         hasDoneTutorial: false
     },
     {
         id: 3,
-        name: 'Player 4',
+        name: '??? (4)',
         alive: true,
         hasDoneTutorial: false
     },
@@ -162,9 +181,11 @@ const TurnExample = Game({
     }),
 
     moves: {
-        completeTutorial(G, ctx) {
+        completeTutorial(G, ctx, name) {
             let newG = { ...G}
             newG.players[ctx.currentPlayer].hasDoneTutorial = true
+            newG.players[ctx.currentPlayer].name = name
+
             return newG
         },
         propose(G, ctx, proposal) {
@@ -228,12 +249,23 @@ const TurnExample = Game({
                     G.players[index % ctx.numPlayers].name
                 );
                 return index % ctx.numPlayers;
-            }
+            },
         },
         phases: [
             {
                 name: 'propose',
                 allowedMoves: ['propose', 'endTurn', 'endPhase', 'completeTutorial'],
+                endGameIf: (G, ctx) => {
+                    if(G.problems.filter(p => p.active).length === 0){
+                        return "human"
+                    }
+                    if(G.players.filter(p => p.alive && !p.aliens).length === 0){
+                        return "aliens"
+                    }
+                    if(G.spaceship.resources.some(r => r.value <= 0)){
+                        return "aliens"
+                    }
+                },
                 onTurnBegin: (G, ctx) => {
                     let newG = {
                         ...G
@@ -311,7 +343,10 @@ const TurnExample = Game({
                             let { player, room } = mostVotedProposal.proposal;
                             if (G.rooms[room].deadly) {
                                 newG.players[player].alive = false;
-                                announce(newG, `${newG.players[player].name} dissapeared`, Intent.DANGER)
+                                newG = announce(newG, `${newG.players[player].name} dissapeared`, Intent.DANGER)
+                                if(newG.players[player].aliens){
+                                    newG = announce(newG, `${newG.players[player].name} has dissapeared, my sensors detected that he was a Shapeshifter`, Intent.DANGER)
+                                }
                                 ctx.events.endPhase('propose');
                                 return newG;
                             } else {
@@ -326,6 +361,9 @@ const TurnExample = Game({
                             let deadPlayer = mostVotedProposal.proposal.player;
                             newG.players[deadPlayer].alive = false;
                             newG = announce(newG, `${newG.players[deadPlayer].name} has been thrown in Space`, Intent.DANGER)
+                            if(newG.players[deadPlayer].aliens){
+                                newG = announce(newG, `${newG.players[deadPlayer].name} has been thrown in Space, my sensors detected that he was a Shapeshifter`, Intent.DANGER)
+                            }
                             ctx.events.endPhase('propose');
                             return newG;
                         case 'PROBE':
