@@ -83,7 +83,8 @@ class Board extends React.Component {
         case 'THROW':
         return `Throw ${players[proposal.player].name} in Space`
         case 'FIX':
-          return `Fix ${problems[proposal.problemId].name}`
+        console.log("FIX", problems,proposal.problemId )
+          return `Fix ${problems[problems.findIndex(p => p.id === proposal.problemId)].name}`
         case 'PROBE':
         return `Probe ${rooms[proposal.room].name}`
         default:

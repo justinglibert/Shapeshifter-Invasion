@@ -383,7 +383,8 @@ const TurnExample = Game({
                             }
                         case 'FIX':
                             let { problemId } = mostVotedProposal.proposal;
-                            let problem = newG.problems[problemId];
+                            let problemArrayId = newG.problems.findIndex(p => p.id == problemId)
+                            let problem = newG.problems[problemArrayId];
                             let canFix = true;
                             problem.solutions.forEach(s => {
                                 console.log('s: ' + s);
@@ -398,10 +399,10 @@ const TurnExample = Game({
                             });
                             console.log('CanFix: ' + canFix);
                             if (canFix) {
-                                newG = announce(newG, `${newG.problems[problemId].name} has been fixed!`, Intent.SUCCESS)
-                                newG.problems[problemId].active = false;
+                                newG = announce(newG, `${newG.problems[problemArrayId].name} has been fixed!`, Intent.SUCCESS)
+                                newG.problems[problemArrayId].active = false;
                             } else {
-                                newG = announce(newG, `You didn't succeed to fix ${newG.problems[problemId].name}`, Intent.WARNING)
+                                newG = announce(newG, `You didn't succeed to fix ${newG.problems[problemArrayId].name}`, Intent.WARNING)
                             }
                             ctx.events.endPhase('propose');
                             return newG;

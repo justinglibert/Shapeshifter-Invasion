@@ -1,11 +1,11 @@
 
 export const ProblemData = [
-        {name: 'Oxygen Supply Failure', description: 'Failure in the oxygen supply system.', solutions: ['repairKit'], affected: 'oxygen', decreaseRate: 10},
+        {id: 'oxygenSupply', name: 'Oxygen Supply Failure', description: 'Failure in the oxygen supply system.', solutions: ['repairKit'], affected: 'oxygen', decreaseRate: 10},
         //{name: 'Impact by Meteroids', description: 'The spaceship was hit by meteroids and is now off course!', solutions: ['course'], affected: 'trajectory'},
-        {name: 'Food Consumption', description: 'Food supply has to be located and brought back to the group.', solutions: ['food'], affected: 'food', decreaseRate: 10}, 
-        {name: 'Low on Water Supply', description: 'Water supply has to be located and brought back to the group.', solutions: ['water'], affected: 'water', decreaseRate: 10},  
+        {id: 'foodComsumption', name: 'Food Consumption', description: 'Food supply has to be located and brought back to the group.', solutions: ['food'], affected: 'food', decreaseRate: 10}, 
+        {id: 'lowWater', name: 'Low on Water Supply', description: 'Water supply has to be located and brought back to the group.', solutions: ['water'], affected: 'water', decreaseRate: 10},  
         //{name: 'Radio Signal Lost', description: 'Radio contact with Earth is lost and must be reestablished.', solutions: ['repairKit'], affected: 'radio'}, 
-        {name: 'Engine Failure', description: 'Engine C has failed and the spaceship is losing speed!', solutions: ['repairKit'], affected: 'engine', decreaseRate: 10}
+        {id:'engineFailrue', name: 'Engine Failure', description: 'Engine C has failed and the spaceship is losing speed!', solutions: ['repairKit'], affected: 'engine', decreaseRate: 10}
 ];
    
 export const DangerData = ['Miniature Blackhole', 'Radioactivity', 'Space Cockroaches', 'Xhwathu Gravity Trap']

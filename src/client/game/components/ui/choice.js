@@ -54,7 +54,7 @@ class Choice extends React.Component {
             sendWho: props.players.filter(p => p.alive)[0].id,
             sendWhere: 0,
             throwWho: props.players.filter(p => p.alive)[0].id,
-            fixWhat: props.problems.findIndex(p => p.active),
+            fixWhat: props.problems.filter(p => p.active)[0].id,
             probeWhere: 0
         };
     }
@@ -86,7 +86,7 @@ class Choice extends React.Component {
                             {
                                 this.props.players
                                 .filter(p => p.alive)
-                                .map((p, i) => {
+                                .map((p) => {
                                     return (<option value={p.id}>
                                         {p.name}
                                     </option>);
@@ -141,7 +141,7 @@ class Choice extends React.Component {
                             }}
                         >{this.props.players
                                 .filter(p => p.alive)
-                                .map((p, i) => {
+                                .map((p) => {
                                     return (<option value={p.id}>
                                         {p.name}
                                     </option>);
@@ -177,12 +177,14 @@ class Choice extends React.Component {
                                 });
                             }}
 
-                        >{this.props.problems.filter((p) => p.active).map((p, i) => {
-                                return (<option value={i}>{p.name}</option>)
+                        >{this.props.problems.filter((p) => p.active).map((p) => {
+                                return (<option value={p.id
+                                }>{p.name}</option>)
                             })}</BPSelect>
                         </div>
 
                             <Button disabled={checkSimilitude('FIX', this.props.proposals, this.state)} onClick={() => {
+                                console.log(fixWhat)
                             this.props.submit({
                                 type: 'FIX',
                                 problemId: fixWhat,
