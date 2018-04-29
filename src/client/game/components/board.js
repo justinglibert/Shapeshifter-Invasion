@@ -22,6 +22,8 @@ import Propositions from './ui/propositions';
 import Choice from './ui/choice';
 import ChooseItems from './ui/chooseItems';
 import AlienInfo from './ui/alienInfo';
+import Tutorial from './ui/tutorial';
+
 
 import { Toast, Toaster, Button } from "@blueprintjs/core";
 
@@ -64,6 +66,7 @@ class Board extends React.Component {
         let toast = {
           message: nextProps.G.announcement.message,
           intent: nextProps.G.announcement.intent,
+          icon: nextProps.G.announcement.icon,
           timeout: 5000
         }
         this.toaster.show(toast)
@@ -110,6 +113,7 @@ class Board extends React.Component {
         }
         return (
             <div>
+                {!players[this.props.playerID].hasDoneTutorial && <Tutorial completeTutorial={() => this.props.moves.completeTutorial()} amIPlaying={amIPlaying}/>}
                 <Toaster ref={ref => this.toaster = ref}></Toaster>
                 <div style={{ marginBottom: '1em' }}>
                     {disconnected}
@@ -118,7 +122,7 @@ class Board extends React.Component {
                     </span>
                 </div>
 
-                {amIPlaying && this.props.ctx.phase === 'propose' ? <Choice submit={(p) => {
+                {amIPlaying && this.props.ctx.phase === 'propose' && players[this.props.playerID].hasDoneTutorial ? <Choice submit={(p) => {
                   this.props.moves.propose(p)
                 }} players={players} rooms={rooms} problems={problems}/> : undefined}
                 {amIPlaying && this.props.ctx.phase === 'resolve' && this.props.G.roomBeingVisited ? <ChooseItems submit={(i) => {

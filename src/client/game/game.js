@@ -39,6 +39,7 @@ const findNextAlivePlayer = G => {
 const announce = (G, message, intent) => {
     G.announcement.message = message
     G.announcement.intent = intent
+    G.announcement.icon = 'delta'
     return  G
 }  
 
@@ -115,27 +116,36 @@ const TurnExample = Game({
             {
                 id: 0,
                 name: 'Player 1',
-                alive: true
+                alive: true,
+                hasDoneTutorial: false
             },
             {
                 id: 1,
                 name: 'Player 2',
-                alive: true
+                alive: true,
+                hasDoneTutorial: false
             },
             {
                 id: 2,
                 name: 'Player 3',
-                alive: true
+                alive: true,
+                hasDoneTutorial: false
             },
             {
                 id: 3,
                 name: 'Player 4',
-                alive: true
+                alive: true,
+                hasDoneTutorial: false
             },
         ]
     }),
 
     moves: {
+        completeTutorial(G, ctx) {
+            let newG = { ...G}
+            newG.players[ctx.currentPlayer].hasDoneTutorial = true
+            return newG
+        },
         propose(G, ctx, proposal) {
             let newG = {
                 ...G
@@ -202,7 +212,7 @@ const TurnExample = Game({
         phases: [
             {
                 name: 'propose',
-                allowedMoves: ['propose', 'endTurn', 'endPhase'],
+                allowedMoves: ['propose', 'endTurn', 'endPhase', 'completeTutorial'],
                 onTurnBegin: (G, ctx) => {
                     let newG = {
                         ...G
