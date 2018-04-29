@@ -7,3 +7,13 @@
 'Collaborate with each other, discuss to find out the Shapeshifters, find tools to fix the spaceship, and survive until we land on Earth.'
 
 'Stay safe.'
+
+
+
+'We have successfully infiltrated a ... human ... spaceship. Our Shapeshifting was successful and we now appear ... exactly ...like them.'
+
+'The ... humans ... do not know of the danger and the traps on the ship. But we know, and we will lead them towards them...'
+
+'Our objective here is gain their trust, deceive them, manipulate them, and lead them all to their deaths... without raising suspicion'
+
+'Eliminate them all.'
