@@ -36,4 +36,8 @@ export const StatusData = [
         //{name: 'Trajectory', id: 'trajectory', value: true}, 
         //{name: 'Radio Signal', id: 'radio', value: true},
         {name: 'Engine Quantum Stability', id: 'engine', value: 100}
+        {name: 'Trajectory', id: 'trajectory', value: 10}, 
+        {name: 'Radio Signal', id: 'radio', value: 10},
+        {name: 'Engine', id: 'engine', value: 10}
 ];
+
