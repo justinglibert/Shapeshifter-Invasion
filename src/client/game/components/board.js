@@ -70,7 +70,7 @@ class Board extends React.Component {
             <div>
                 {disconnected}
                 <p>Current player: {this.props.playerID}</p>
-                {amIPlaying ? "It's your turn" : "Please wait..."}
+                {amIPlaying ? "It's your turn" : "Please wait for your turn..."}
                 {amIPlaying && this.props.ctx.phase === 'propose' ? <Choice submit={(p) => {
                   this.props.moves.propose(p)
                 }} players={players} rooms={rooms} problems={problems}/> : undefined}

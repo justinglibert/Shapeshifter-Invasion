@@ -1,17 +1,13 @@
 import React from 'react';
+import { Card, Elevation } from "@blueprintjs/core";
 
-class Card extends React.Component {
+class SpaceCard extends React.Component {
     render() {
         return (
-            <div
-                style={{
-                    borderStyle: 'solid',
-                    borderWidth: '2px'
-                }}
-            >
-                {this.props.children}
-            </div>
+            <Card elevation={Elevation.TWO}>
+                { this.props.children }
+            </Card>
         );
     }
 }
-export default Card
+export default SpaceCard
