@@ -10,6 +10,9 @@ import { Game } from 'boardgame.io/core';
 import {
     Intent,
 } from "@blueprintjs/core";
+
+import _ from 'lodash';
+import {ProblemData, ItemData, StatusData, Rooms} from './texts'
 /*
  * Copyright 2018 The boardgame.io Authors
  *
@@ -43,6 +46,50 @@ const announce = (G, message, intent) => {
     return  G 
 }  
 
+const generateNewGameEnvironment = () => {
+    console.log("Generating the env")
+    const numberOfProblems = 2
+    const numberOfDangerousRoom = 2
+    let problems = _.sampleSize(ProblemData, numberOfProblems)
+    console.log(problems)
+    problems = problems.map((p) => {
+        return {
+            ...p,
+            active: true
+        }
+    })
+    console.log(problems)
+    let solutions = problems.map(p => p.solution)
+    solutions = _.flatten(solutions)
+    console.log(solutions)
+    let items = solutions.map(s => ItemData.find(i => i.id === s))
+    console.log(items)
+    let roomsUnpopulated = _.sampleSize(Rooms, items.length + numberOfDangerousRoom)
+    console.log(roomsUnpopulated)
+    //Populate rooms
+    let rooms = items.map((item, i) => {return {
+        name: roomsUnpopulated[i],
+        items: [item]
+    }})
+    let i = rooms.length
+    while(rooms.length < roomsUnpopulated.length) {
+        rooms.push({
+            name: roomsUnpopulated[i],
+            items: [],
+            deadly: true
+        })
+        i++
+    }
+    return {
+        problems: problems,
+        spaceship: {
+            resources: StatusData
+        },
+        rooms: rooms
+    }
+
+}
+
 const inflictDamageToSpaceship = (spaceship, problems)=> {
     console.log("Damaging the spaceship")
     let newResources = spaceship.resources
@@ -60,58 +107,10 @@ const TurnExample = Game({
     setup: () => ({
         shouldHarmShip: false,
         announcement: {}, 
-        spaceship: {
-            resources: [
-                {
-                    name: 'water',
-                    amount: '7'
-                },
-                {
-                    name: 'oxygen',
-                    amount: '5'
-                }
-            ]
-        },
-        rooms: [
-            {
-                name: 'Kitchen',
-                deadly: true,
-                items: [
-                    {
-                        id: 'screwdriver',
-                        name: 'Screwdriver'
-                    }
-                ]
-            },
-            {
-                name: 'Engine',
-                deadly: false,
-                items: [
-                    {
-                        id: 'screwdriver',
-                        name: 'Screwdriver'
-                    }
-                ]
-            }
-        ],
+        ...generateNewGameEnvironment(),
         roomBeingVisited: undefined,
-        problems: [
-            {
-                active: true,
-                name: 'oxygen leak',
-                description: 'oxygen leaks every turn',
-                solutions: ['screwdriver'],
-                affected: 'oxygen',
-                decreaseRate: 1
-            },
-        ],
         proposals: [],
-        items: [
-            {
-                id: 'screwdriver2',
-                name: 'Screwdriver2'
-            }
-        ],
+        items: [],
         players: [
             {
                 id: 0,
