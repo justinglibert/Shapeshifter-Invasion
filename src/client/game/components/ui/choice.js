@@ -35,7 +35,7 @@ class Choice extends React.Component {
     render() {
         const { sendWho, sendWhere, throwWho, fixWhat } = this.state;
         return (
-            <Dialog isOpen={true} title="Select an action">
+            <Dialog isOpen={true} title="Select an action" isCloseButtonShown={false}>
                 <div className="pt-dialog-body" >
                     <div
                         style={{

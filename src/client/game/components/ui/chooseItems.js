@@ -43,7 +43,7 @@ class ChooseItems extends React.Component {
 
     render() {
         return (
-            <Dialog isOpen={true} title="Select the items you'd like to bring back">
+            <Dialog isOpen={true}  isCloseButtonShown={false} title="Select the items you'd like to bring back">
                 <div className="pt-dialog-body">
                     { this.createCheckboxes() }
                 </div>
