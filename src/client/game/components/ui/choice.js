@@ -6,6 +6,7 @@ import Select from 'react-select';
 //<TextSelect options={['text select', 'react component', 'dropdown']} active={this.state.selectedOption} onChange={this.onTextSelectChange} />
 import Modal from 'react-responsive-modal/lib/css';
 import 'react-select/dist/react-select.css';
+import { Button } from "@blueprintjs/core";
 
 class Choice extends React.Component {
     constructor(props) {
@@ -71,13 +72,13 @@ class Choice extends React.Component {
                                     };
                                 })}
                             />
-                            <button disabled={(sendWho === undefined && sendWhere === undefined)} onClick={() => {
+                            <Button disabled={(sendWho === undefined && sendWhere === undefined)} onClick={() => {
                                 this.props.submit({
                                     type: 'SEND',
                                     player: sendWho,
                                     room: sendWhere
                                 })
-                            }}>Submit</button>
+                            }}>Submit</Button>
                         </div>
                         <div
                             style={{
@@ -109,12 +110,12 @@ class Choice extends React.Component {
                                     })}
                             />{' '}
                             in Space
-                            <button disabled={throwWho === undefined} onClick={() => {
+                            <Button disabled={throwWho === undefined} onClick={() => {
                                 this.props.submit({
                                     type: 'THROW',
                                     player: throwWho,
                                 })
-                            }}>Submit</button>
+                            }}>Submit</Button>
                         </div>
                         <div
                             style={{
@@ -144,12 +145,12 @@ class Choice extends React.Component {
                                     };
                                 })}
                             />
-                             <button disabled={(fixWhat) === undefined} onClick={() => {
+                             <Button disabled={(fixWhat) === undefined} onClick={() => {
                                 this.props.submit({
                                     type: 'FIX',
                                     problemId: fixWhat,
                                 })
-                            }}>Submit</button>
+                            }}>Submit</Button>
                         </div>
                     </Card>
                 </div>
