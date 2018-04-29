@@ -8,6 +8,7 @@
 
 'Stay safe.'
 
+// Alien
 
 
 'We have successfully infiltrated a ... human ... spaceship. Our Shapeshifting was successful and we now appear ... exactly ...like them.'
@@ -17,3 +18,12 @@
 'Our objective here is gain their trust, deceive them, manipulate them, and lead them all to their deaths... without raising suspicion'
 
 'Eliminate them all.'
+
+
+// Human Win
+
+'You\'ve done it! #PLAYERNAME, I am pleased to anounce that I no longer sense any Xhwathu presence. We\'re now heading back to Earth.'
+
+// Aliens Win
+
+'Mission ... accomplished. You\'ve successfully outsmarted the ... humans. We\'re now returning to Xhwathura.'
