@@ -18,7 +18,7 @@ const App = Client({
   board: SpaceBoard,
   multiplayer: true,
   debug: true,
-  numPlayers: 2
+  numPlayers: 4
 });
 
 const Multiplayer = ({match}) => (

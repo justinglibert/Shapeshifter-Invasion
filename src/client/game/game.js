@@ -33,9 +33,23 @@ const findNextAlivePlayer = G => {
         return p.alive;
     });
 };
+
+const inflictDamageToSpaceship = (spaceship, problems)=> {
+    console.log("Damaging the spaceship")
+    let newResources = spaceship.resources
+    spaceship.resources.forEach((r, i)=>{
+        let malus = 0
+        problems.filter(p => p.active).filter(p => p.affected === r.name).forEach((p)=>{
+            malus += p.decreaseRate
+        })
+        newResources[i].amount = newResources[i].amount - malus
+    })
+    return newResources
+}
 const TurnExample = Game({
     name: 'turnorder',
     setup: () => ({
+        shouldHarmShip: false,
         spaceship: {
             resources: [
                 {
@@ -78,8 +92,8 @@ const TurnExample = Game({
                 description: 'oxygen leaks every turn',
                 solutions: ['screwdriver'],
                 affected: 'oxygen',
-                decreaseRate: 10
-            }
+                decreaseRate: 1
+            },
         ],
         proposals: [],
         items: [
@@ -96,7 +110,15 @@ const TurnExample = Game({
             {
                 name: 'Player 2',
                 alive: true
-            }
+            },
+            {
+                name: 'Player 3',
+                alive: true
+            },
+            {
+                name: 'Player 4',
+                alive: true
+            },
         ]
     }),
 
@@ -139,7 +161,9 @@ const TurnExample = Game({
     },
     flow: {
         turnOrder: {
-            first: (G) => findNextAlivePlayer(G),
+            first: (G) => {
+                return findNextAlivePlayer(G)
+            },
             next: (G, ctx) => {
                 let index = ctx.playOrderPos + 1;
                 let alive = G.players[index % ctx.numPlayers].alive;
@@ -155,17 +179,22 @@ const TurnExample = Game({
                 return index % ctx.numPlayers;
             }
         },
-        onTurnBegin: (G, ctx) => {
-            if (G.players[ctx.currentPlayer].alive === false) {
-                console.log('Turn Blocked by the hook');
-                ctx.event.endTurn();
-            }
-            return G;
-        },
         phases: [
             {
                 name: 'propose',
                 allowedMoves: ['propose', 'endTurn', 'endPhase'],
+                onTurnBegin: (G, ctx) => {
+                    let newG = {
+                        ...G
+                    }
+                    console.log("Should we infect damage? : " + (newG.shouldHarmShip))
+                    if(newG.shouldHarmShip){
+                        newG.spaceship.resources = inflictDamageToSpaceship(newG.spaceship, newG.problems)
+                        newG.shouldHarmShip = false
+                        console.log("Infected damage: " + JSON.stringify(newG.spaceship.resources))
+                    }
+                    return newG
+                },
                 endTurnIf: (G, ctx) => {
                     G.proposals.filter(p => {
                         return p.player == ctx.currentPlayer;
@@ -231,7 +260,6 @@ const TurnExample = Game({
                             if (G.rooms[room].deadly) {
                                 newG.players[player].alive = false;
                                 ctx.events.endPhase('propose');
-                                ctx.events.endTurn(findNextAlivePlayer(newG));
                                 return newG;
                             } else {
                                 console.log('Visiting a Room');
@@ -245,7 +273,6 @@ const TurnExample = Game({
                             let deadPlayer = mostVotedProposal.proposal.player;
                             newG.players[deadPlayer].alive = false;
                             ctx.events.endPhase('propose');
-                            ctx.events.endTurn(findNextAlivePlayer(newG));
                             return newG;
                         case 'FIX':
                             let { problemId } = mostVotedProposal.proposal;
@@ -267,15 +294,13 @@ const TurnExample = Game({
                                 newG.problems[problemId].active = false;
                             }
                             ctx.events.endPhase('propose');
-                            ctx.events.endTurn(findNextAlivePlayer(newG));
                             return newG;
                         default:
                             console.error('This action does not exist');
                             ctx.events.endPhase('propose');
-                            ctx.events.endTurn(findNextAlivePlayer(newG));
                             return newG;
                     }
-                },
+                }, 
                 endPhaseIf: (G, ctx) => {
                     return G.roomBeingVisited === undefined;
                 },
@@ -285,6 +310,8 @@ const TurnExample = Game({
                     };
                     newG.proposals = [];
                     newG.roomBeingVisited = undefined;
+                    console.log("Setting should harm ship")
+                    newG.shouldHarmShip = true;
                     return newG;
                 }
                 //Use that when multiple people will be travelling
