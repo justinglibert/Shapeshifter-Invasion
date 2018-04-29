@@ -123,7 +123,8 @@ const problem2= {
   description: 'The engine room needs the power back.',
   solution: 'Turn power back on.',
   affected: 'Speed',
-  decreaseRate: 5
+  decreaseRate: 5,
+
 }
 
 const problems = [problem1, problem2]
@@ -135,13 +136,21 @@ storiesOf('Problems', module).add('Problems', () =>
 const prop1 = {
   player: 'Justin',
   description: 'Send Jay to room 8.',
-  percentage: 25
+  percentage: 25,
+  voters: [
+    2,
+    3
+  ]
 }
 
 const prop2 = {
   player: 'Robin',
   description: 'Probe room 2.',
-  percentage: 50
+  percentage: 50,
+  voters: [
+    2,
+    3
+  ]
 }
 
 const propositions = [prop1, prop2]

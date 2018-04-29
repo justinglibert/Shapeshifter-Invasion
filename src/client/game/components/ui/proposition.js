@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "./card";
 import { Button, ProgressBar } from "@blueprintjs/core";
+import colours from './colours'
 
 
 class Proposition extends React.Component {
@@ -17,7 +18,7 @@ class Proposition extends React.Component {
           </ProgressBar>
           {this.props.proposition.voters.map((v) => {
             return (
-              <span class="dot" style={{color: red}}></span>
+              <span class="dot" style={{backgroundColor: colours[v]}}></span>
             )
           })} 
           

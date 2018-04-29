@@ -81,7 +81,8 @@ class Board extends React.Component {
           return {
             player: players[p.player].name,
             description: this.makeSentence(p.proposal, players, rooms, problems),
-            percentage: Math.ceil(p.voters.length / totalVote * 100)
+            percentage: Math.ceil(p.voters.length / totalVote * 100),
+            voters: p.voters
           }
         })
         
