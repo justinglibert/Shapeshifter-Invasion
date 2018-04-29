@@ -7,7 +7,7 @@ import colours from './colours'
 class Proposition extends React.Component {
   render() {
     return (
-        <Card style={{display:'flex', flexDirection:'row', justifyContent: this.props.proposition.percentage > 0 ? 'space-around' : 'start', alignItems: 'center', padding: '30px'}}>
+        <Card style={{display:'flex', flexDirection:'row', justifyContent: this.props.proposition.percentage > 0 ? 'space-between' : 'start', alignItems: 'center', padding: '30px'}}>
           <h4 style={{minWidth: '400px'}}>{this.props.proposition.player}: {this.props.proposition.description}</h4>
           {this.props.proposition.percentage > 0 ? 
           <div style={{minWidth: '400px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'start'}}>
