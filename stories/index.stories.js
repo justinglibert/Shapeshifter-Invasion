@@ -88,18 +88,19 @@ storiesOf('ItemOptions', module).add('with pistols', ()=>
 
 const oxygen = {
   name: 'oxygen',
-  amount: '5'
+  value: '5'
 }
 
 const water = {
 name: 'water',
-amount: '7'
+value: '7'
 }
 
 const ship = {
   problems: [],
   resources: [oxygen, water]
 };
+
 
 
 storiesOf('Status', module).add('of oxygen', ()=>
